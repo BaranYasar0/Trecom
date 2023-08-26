@@ -1,0 +1,164 @@
+﻿
+PUT catalog_re_index
+{
+  "mappings": {
+    "properties": {
+      "brand": {
+        "properties": {
+          "name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      },
+      "supplier": {
+        "properties": {
+          "name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "picture_url": {
+            "type": "keyword"
+          },
+          "bill_status": {
+            "type": "boolean"
+          },
+          "address": {
+            "properties": {
+              "city": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "district": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              },
+              "province": {
+                "type": "text",
+                "fields": {
+                  "keyword": {
+                    "type": "keyword"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "categories": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "description": {
+        "type": "keyword"
+      },
+      "picture_url": {
+        "type": "keyword"
+      },
+      "body_type": {
+        "type": "boolean"
+      },
+      "gender": {
+        "type": "keyword"
+      },
+      "unit_price": {
+        "type": "long"
+      },
+      "created_date": {
+        "type": "date"
+      },
+      "is_active": {
+        "type": "boolean"
+      },
+      "updated_date": {
+        "type": "date"
+      }
+    }
+  }
+  
+  
+}
+
+
+
+
+PUT supplier
+{
+  "mappings": {
+    "properties": {
+      
+      "created_date":{"type": "date"},
+      "updated_date":{"type": "date"},
+      "name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "picture_url": {
+        "type": "keyword"
+      },
+      "bill_status": {
+        "type": "boolean"
+      },
+      "address": {
+        "properties": {
+          "city": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "district": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          },
+          "province": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

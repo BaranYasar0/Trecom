@@ -1,0 +1,9 @@
+﻿Gateway => 5000
+Identity => 5001
+Catalog => 5002
+Order => 5003
+Stock => 5004
+Basket => 5005
+Payment => 5006
+
+Client => 5010
