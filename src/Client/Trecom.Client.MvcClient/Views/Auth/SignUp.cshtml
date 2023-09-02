@@ -1,0 +1,163 @@
+﻿
+
+@model SignUpInputModel
+
+<!--====== Section 1 ======-->
+<div class="u-s-p-y-60">
+
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="breadcrumb">
+                <div class="breadcrumb__wrap">
+                    <ul class="breadcrumb__list">
+                        <li class="has-separator">
+
+                            <a href="/">Ana Sayfa</a>
+                        </li>
+                        <li class="is-marked">
+
+                            <a asp-controller="Auth" asp-action="SignUp">Kayıt Ol</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====== End - Section 1 ======-->
+<!--====== Section 2 ======-->
+<div class="u-s-p-b-60">
+
+    <!--====== Section Intro ======-->
+    <div class="section__intro u-s-m-b-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section__text-wrap">
+                        <h1 class="section__heading u-c-secondary">Hesap Oluştur</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Intro ======-->
+    <!--====== Section Content ======-->
+    <div class="section__content">
+        <div class="container">
+            <div class="row row--center">
+                <div class="col-lg-6 col-md-8 u-s-m-b-30">
+                    <div class="l-f-o">
+                        <div class="l-f-o__pad-box">
+                            <h1 class="gl-h1">Kişisel Bilgiler</h1>
+                            <form class="l-f-o__form" method="post" asp-controller="Auth" asp-action="SignUp">
+                                <div class="gl-s-api">
+                                    <div class="u-s-m-b-15">
+
+                                        <button class="gl-s-api__btn gl-s-api__btn--fb" type="button">
+                                            <i class="fab fa-facebook-f"></i>
+
+                                            <span>Facebook ile Kayıt Ol</span>
+                                        </button>
+                                    </div>
+                                    <div class="u-s-m-b-30">
+
+                                        <button class="gl-s-api__btn gl-s-api__btn--gplus" type="button">
+                                            <i class="fab fa-google"></i>
+
+                                            <span>Google ile Kayıt Ol</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="u-s-m-b-30">
+
+                                    <label class="gl-label" for="reg-fname">İSİM *</label>
+
+                                    <input class="input-text input-text--primary-style" type="text" id="reg-fname" placeholder="First Name" asp-for="FirstName">
+                                </div>
+                                <div class="u-s-m-b-30">
+
+                                    <label class="gl-label" for="reg-lname">SOYAD *</label>
+
+                                    <input class="input-text input-text--primary-style" type="text" id="reg-lname" asp-for="LastName" placeholder="Last Name">
+                                </div>
+                                <div class="gl-inline">
+                                    <div class="u-s-m-b-30">
+
+                                        <!--====== Date of Birth Select-Box ======-->
+                                        
+                                        <span class="gl-label">Doğum Tarihi</span>
+                                        <div class="gl-dob">
+                                            <select class="select-box select-box--primary-style" asp-for="BirthDay">
+                                                <option selected>Gün</option>
+                                                @for (int i = 1; i < 31; i++)
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            </select>
+                                            <select class="select-box select-box--primary-style" asp-for="BirthMonth">
+                                                <option selected>Ay</option>
+                                                <option value="01">Ocak</option>
+                                                <option value="02">Şubat</option>
+                                                <option value="03">Mart</option>
+                                                <option value="04">Nisan</option>
+                                                <option value="05">Mayıs</option>
+                                                <option value="06">Haziran</option>
+                                                <option value="07">Temmuz</option>
+                                                <option value="08">Ağustos</option>
+                                                <option value="09">Eylül</option>
+                                                <option value="10">Ekim</option>
+                                                <option value="11">Kasım</option>
+                                                <option value="12">Aralık</option>
+                                            </select>
+                                            
+                                            <select class="select-box select-box--primary-style" asp-for="BirthYear">
+                                                <option selected>Yıl</option>
+                                                @for (int i = int.Parse(DateTime.Now.Year.ToString())-30; i <= DateTime.Now.Year; i++)
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                                
+                                            </select>
+                                            
+                                        </div>
+                                        <!--====== End - Date of Birth Select-Box ======-->
+                                    </div>
+                                    <div class="u-s-m-b-30">
+                                        <label class="gl-label" for="gender">CİNSİYET</label>
+                                        <select class="select-box select-box--primary-style u-w-100" id="gender" asp-for="Gender">
+                                            <option selected>Seç</option>
+                                            <option value="0">Erkek</option>
+                                            <option value="1">Kadın</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="u-s-m-b-30">
+
+                                    <label class="gl-label" for="reg-email">E-MAIL *</label>
+
+                                    <input class="input-text input-text--primary-style" type="text" id="reg-email" placeholder="E-mail gir..." asp-for="Email">
+                                </div>
+                                <div class="u-s-m-b-30">
+
+                                    <label class="gl-label" for="reg-password">SIFRE *</label>
+
+                                    <input class="input-text input-text--primary-style" type="text" id="reg-password" placeholder="Şifre gir..." asp-for="Password">
+                                </div>
+                                <div class="u-s-m-b-15">
+
+                                    <button class="btn btn--e-transparent-brand-b-2" type="submit">Kayıt Ol</button>
+                                </div>
+
+                                <a class="gl-link" href="/">Magazaya Dön</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--====== End - Section Content ======-->
+</div>
+<!--====== End - Section 2 ======-->
+

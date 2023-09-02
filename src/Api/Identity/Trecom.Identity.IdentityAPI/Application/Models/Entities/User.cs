@@ -11,6 +11,8 @@ namespace Trecom.Api.Identity.Application.Models.Entities
         public string Email { get; set; }
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash { get; set; }
+        public DateTime BirthDate { get; set; }
+        public EGender Gender { get; set; }
         public bool IsPremium { get; set; } = false;
         public bool Status { get; set; } = true;
 

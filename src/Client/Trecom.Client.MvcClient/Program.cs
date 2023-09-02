@@ -1,7 +1,17 @@
+using Trecom.Client.MvcClient.Services;
+using Trecom.Client.MvcClient.Services.Interfaces;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+builder.Services.AddHttpClient<IAuthService, AuthService>(x =>
+{
+    x.BaseAddress = new Uri("https://localhost:5000/identity/auth/");
+});
 
 var app = builder.Build();
 
@@ -18,6 +28,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

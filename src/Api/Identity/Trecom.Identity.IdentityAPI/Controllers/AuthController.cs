@@ -34,7 +34,6 @@ namespace Trecom.Api.Identity.Controllers
             };
 
             RegisterResponseDto result = await _mediator.Send(registerCommand);
-            SetAccessTokenToCookie(result.AccessToken);
             return Created("", result.AccessToken);
 
 
