@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Trecom.Api.Identity.Application.Helpers.Encryption.Hashing;
 using Trecom.Api.Identity.Application.Helpers.JWT;
 using Trecom.Api.Identity.Application.Models.Dtos;
+using Trecom.Api.Identity.Application.Observers;
+using Trecom.Api.Identity.Application.Observers.User;
 using Trecom.Api.Identity.EntityFramework;
 using Trecom.Api.Identity.Services.Interfaces;
 using Trecom.Shared.CCS.GlobalException;
@@ -21,14 +23,17 @@ namespace Trecom.Api.Identity.Application.Features.Commands
             private readonly IHttpContextAccessor _contextAccessor;
             private readonly IAuthService _authService;
             private readonly ILogger<LoginCommandHandler> _logger;
+            //private readonly IUserObserver userObserver;
+            private readonly ObserverBuilder<IUserObserver> observerBuilder;
 
-
-            public LoginCommandHandler(AppDbContext context, IHttpContextAccessor contextAccessor, ITokenHelper tokenHelper, IAuthService authService, ILogger<LoginCommandHandler> logger)
+            public LoginCommandHandler(AppDbContext context, IHttpContextAccessor contextAccessor, ITokenHelper tokenHelper, IAuthService authService, ILogger<LoginCommandHandler> logger, ObserverBuilder<IUserObserver> observerBuilder)
             {
                 _context = context;
                 _contextAccessor = contextAccessor;
                 _authService = authService;
                 _logger = logger;
+                //this.userObserver = userObserver;
+                this.observerBuilder = observerBuilder;
             }
 
             public async Task<ApiResponse<RegisterResponseDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -46,6 +51,8 @@ namespace Trecom.Api.Identity.Application.Features.Commands
 
                 _logger.LogInformation($"Giriş yapıldı ve token olusturuldu.{accessToken.Token}");
 
+                observerBuilder.NotifyObservers(user);
+
                 return new ApiResponse<RegisterResponseDto>
                 {
                     Data = new RegisterResponseDto
@@ -56,9 +63,7 @@ namespace Trecom.Api.Identity.Application.Features.Commands
                         Expiration = accessToken.Expiration
                     },
                     Message = "Giriş Yapıldı"
-
                 };
-
 
             }
         }

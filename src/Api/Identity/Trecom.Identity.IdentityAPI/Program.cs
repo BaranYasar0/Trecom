@@ -7,6 +7,8 @@ using Microsoft.IdentityModel.Tokens;
 using Trecom.Api.Identity.Application.Features.Rules;
 using Trecom.Api.Identity.Application.Helpers.Encryption;
 using Trecom.Api.Identity.Application.Helpers.JWT;
+using Trecom.Api.Identity.Application.Observers;
+using Trecom.Api.Identity.Application.Observers.User;
 using Trecom.Api.Identity.EntityFramework;
 using Trecom.Api.Identity.Services.Interfaces;
 using Trecom.Shared.Extensions;
@@ -31,6 +33,16 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenHelper, JwtHelper>();
 builder.Services.AddScoped<AuthBusinessRules>();
+
+builder.Services.AddSingleton<ObserverBuilder<IUserObserver>>(sp =>
+{
+    UserObserverBuilder observerBuilder = new UserObserverBuilder();
+
+    observerBuilder.RegisterObserver(new UserLogToElasticAndConsole(sp));
+    observerBuilder.RegisterObserver(new UserSendEmail(sp));
+
+    return observerBuilder;
+});
 
 builder.Services.AddMediatR(x =>
 {
