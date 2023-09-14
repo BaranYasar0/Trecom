@@ -6,14 +6,16 @@ using Trecom.Api.Identity.Application.Helpers.JWT;
 using Trecom.Api.Identity.Application.Models.Dtos;
 using Trecom.Api.Identity.EntityFramework;
 using Trecom.Api.Identity.Services.Interfaces;
+using Trecom.Shared.CCS.GlobalException;
+using Trecom.Shared.Models;
 
 namespace Trecom.Api.Identity.Application.Features.Commands
 {
-    public class LoginCommand : IRequest<RegisterResponseDto>
+    public class LoginCommand : IRequest<ApiResponse<RegisterResponseDto>>
     {
         public UserForLoginDto UserForLoginDto { get; set; }
 
-        public class LoginCommandHandler : IRequestHandler<LoginCommand, RegisterResponseDto>
+        public class LoginCommandHandler : IRequestHandler<LoginCommand, ApiResponse<RegisterResponseDto>>
         {
             private readonly AppDbContext _context;
             private readonly IHttpContextAccessor _contextAccessor;
@@ -29,7 +31,7 @@ namespace Trecom.Api.Identity.Application.Features.Commands
                 _logger = logger;
             }
 
-            public async Task<RegisterResponseDto> Handle(LoginCommand request, CancellationToken cancellationToken)
+            public async Task<ApiResponse<RegisterResponseDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.UserForLoginDto.Email);
                 if (user is null)
@@ -38,19 +40,26 @@ namespace Trecom.Api.Identity.Application.Features.Commands
                 byte[] passwordHash, passwordSalt;
 
                 if (!HashingHelper.VerifyPasswordHash(request.UserForLoginDto.Password, user.PasswordHash, user.PasswordSalt))
-                    throw new Exception($"{request.UserForLoginDto.Password} yanlıs!");
+                    throw new BusinessException($"{request.UserForLoginDto.Password} yanlıs!");
 
                 AccessToken accessToken = await _authService.CreateAccessToken(user);
 
-
-
                 _logger.LogInformation($"Giriş yapıldı ve token olusturuldu.{accessToken.Token}");
 
-                return new RegisterResponseDto
+                return new ApiResponse<RegisterResponseDto>
                 {
-                    Email = user.Email,
-                    AccessToken = accessToken,
+                    Data = new RegisterResponseDto
+                    {
+                        Email = user.Email,
+                        FullName = $"{user.FirstName} {user.LastName}",
+                        AccessToken = accessToken.Token,
+                        Expiration = accessToken.Expiration
+                    },
+                    Message = "Giriş Yapıldı"
+
                 };
+
+
             }
         }
     }

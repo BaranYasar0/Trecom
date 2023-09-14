@@ -53,7 +53,7 @@
                                             <a asp-controller="Auth" asp-action="SignIn">
                                                 <i class="fas fa-lock u-s-m-r-6"></i>
 
-                                                <span>Signin</span>
+                                                <span>Giriş Yap</span>
                                             </a>
                                         </li>
                                         <li>
@@ -61,7 +61,7 @@
                                             <a asp-controller="Auth" asp-action="SignUp">
                                                 <i class="fas fa-user-plus u-s-m-r-6"></i>
 
-                                                <span>Signup</span>
+                                                <span>Kayıt Ol</span>
                                             </a>
                                         </li>
                                     }
@@ -71,16 +71,16 @@
                                             <a href="dashboard.html">
                                                 <i class="fas fa-user-circle u-s-m-r-6"></i>
 
-                                                <span>Account</span>
+                                                <span>Profil</span>
                                             </a>
                                         </li>
 
                                         <li>
 
-                                            <a href="signup.html">
+                                            <a asp-controller="Auth" asp-action="SignOut">
                                                 <i class="fas fa-lock-open u-s-m-r-6"></i>
 
-                                                <span>Signout</span>
+                                                <span>Çıkış Yap</span>
                                             </a>
                                         </li>
                                     }
@@ -1111,7 +1111,7 @@
                                     </li>
                                     <li class="has-dropdown has-dropdown--ul-left-100">
 
-                                        <a>Account<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
+                                        <a>Hesap<i class="fas fa-angle-down i-state-right u-s-m-l-6"></i></a>
 
                                         <!--====== Dropdown ======-->
 

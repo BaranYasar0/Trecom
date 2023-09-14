@@ -6,12 +6,7 @@ namespace Trecom.Api.Services.Catalog.Extensions
     public static class ObjectNullCheckExtension
     {
         public static bool ValidateNullBool<T>([NotNull] this T obj)
-        {
-            if (obj == null)
-                throw new ArgumentNullException($"{obj?.GetType().Name} is null!");
-
-            return true;
-        }
+            => obj == null ? true:false;
 
         public static bool ValidateNullBusinessBoolean<T>([NotNull] this T obj) => obj == null ? throw new BusinessException($"{obj?.GetType().Name} is null!") : true;
 

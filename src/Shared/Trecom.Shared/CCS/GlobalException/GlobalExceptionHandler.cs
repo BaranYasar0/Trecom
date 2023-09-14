@@ -3,6 +3,7 @@ using System.Net.Http;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Trecom.Shared.Models;
 
 namespace Trecom.Shared.CCS.GlobalException
 {
@@ -31,6 +32,8 @@ namespace Trecom.Shared.CCS.GlobalException
         {
             context.Response.ContentType = "application/json";
 
+
+
             if (exception.GetType() == typeof(AuthorizationException))
                 return AuthorizationException(context, exception);
 
@@ -48,15 +51,16 @@ namespace Trecom.Shared.CCS.GlobalException
         private Task ValidationException(HttpContext context, Exception exception)
         {
             context.Response.StatusCode = Convert.ToInt32(HttpStatusCode.BadRequest);
-            object errors = ((FluentValidation.ValidationException)exception).Errors;
+            var errors = ((FluentValidation.ValidationException)exception).Errors;
+            
 
-            return context.Response.WriteAsync(new ValidationExceptionDetails()
+            return context.Response.WriteAsync(new ApiResponse()
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 Title = "Validation error(s)",
-                Detail = "",
-                RequestName = _next.Method.Name,
-                Errors = errors
+                Errors = errors.Select(x=>x.ErrorMessage).ToList(),
+                ResponseTime = DateTime.Now,
+                IsSuccess = false
             }.ToString());
         }
 
@@ -64,13 +68,14 @@ namespace Trecom.Shared.CCS.GlobalException
         {
             context.Response.StatusCode = Convert.ToInt32(HttpStatusCode.Unauthorized);
 
-            return context.Response.WriteAsync(new AuthorizationExceptionDetails()
+            return context.Response.WriteAsync(new ApiResponse()
             {
                 Title = "Authorization Exception",
-                Detail = exception.Message,
-                RequestName = _next.Method.Name,
+                Errors = new List<string> { exception.Message },
+                //RequestName = _next.Method.Name,
                 StatusCode = (int)HttpStatusCode.Unauthorized,
-                ThrownDate = DateTime.Now
+                ResponseTime = DateTime.Now,
+                IsSuccess = false
             }.ToString());
         }
 
@@ -78,12 +83,13 @@ namespace Trecom.Shared.CCS.GlobalException
         {
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            return context.Response.WriteAsync(new GeneralExceptionDetails()
+            return context.Response.WriteAsync(new ApiResponse()
             {
                 Title = "Internal Exception",
-                Detail = exception.Message,
+                Errors = new List<string> { exception.Message },
                 StatusCode = StatusCodes.Status400BadRequest,
-                ThrownDate = DateTime.Now
+                ResponseTime = DateTime.Now,
+                IsSuccess = false
             }.ToString());
         }
 
@@ -91,13 +97,13 @@ namespace Trecom.Shared.CCS.GlobalException
         {
             httpContext.Response.StatusCode = Convert.ToInt32(HttpStatusCode.BadRequest);
 
-            return httpContext.Response.WriteAsync(new BusinessExceptionDetails()
+            return httpContext.Response.WriteAsync(new ApiResponse()
             {
                 Title = "Business Exception",
-                Detail = exception.Message,
-                RequestName = _next.Method.Name,
+                Errors = new List<string> { exception.Message },
                 StatusCode = StatusCodes.Status400BadRequest,
-                ThrownDate = DateTime.Now
+                ResponseTime = DateTime.Now,
+                IsSuccess = false
             }.ToString());
         }
     }

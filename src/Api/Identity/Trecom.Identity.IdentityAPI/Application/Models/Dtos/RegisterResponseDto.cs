@@ -6,7 +6,9 @@ namespace Trecom.Api.Identity.Application.Models.Dtos
     public class RegisterResponseDto
     {
         public string Email { get; set; }
-        public AccessToken AccessToken { get; set; }
+        public string AccessToken { get; set; }
+        public string FullName { get; set; }
+        public DateTime Expiration { get; set; }
         public RefreshToken RefreshToken { get; set; }
     }
 }

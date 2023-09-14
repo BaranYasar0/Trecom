@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Features\Commands\Delete\" />
+    <Folder Include="Application\Observers\" />
   </ItemGroup>
 
   <ItemGroup>

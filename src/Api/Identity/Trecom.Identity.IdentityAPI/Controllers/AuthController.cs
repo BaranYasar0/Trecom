@@ -40,8 +40,10 @@ namespace Trecom.Api.Identity.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody]LoginCommand command)
+        public async Task<IActionResult> Login([FromBody]UserForLoginDto model)
         {
+            LoginCommand command = new();
+            command.UserForLoginDto = model;
             var result= await _mediator.Send(command);
             //SetAccessTokenToCookie(result.AccessToken);
             CookieOptions cookieOptions = new()
@@ -50,7 +52,6 @@ namespace Trecom.Api.Identity.Controllers
                     .AddDays(7),
                 Secure = true,
             };
-            Response.Cookies.Append("accessToken", result.AccessToken.Token, cookieOptions);
             return Ok(result);
         }
 

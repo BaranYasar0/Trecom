@@ -61,7 +61,8 @@ namespace Trecom.Api.Identity.Application.Features.Commands
                 {
                     Email = request.UserForRegisterDto.Email,
                     RefreshToken = addedRefreshToken,
-                    AccessToken = createdAccessToken,
+                    AccessToken = createdAccessToken.Token,
+                    Expiration = createdAccessToken.Expiration
                 };
 
                 await _context.SaveChangesAsync();
