@@ -2,6 +2,6 @@
 {
     public interface IObserver
     {
-        void Execute();
+        //void Execute();
     }
 }

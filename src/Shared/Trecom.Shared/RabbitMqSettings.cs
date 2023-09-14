@@ -16,5 +16,6 @@ namespace Trecom.Shared
         public const string StockRollBackEventQueueName = "stock-rollback-event-queue";
         public const string OrderCompletedEventQueueName = "order-completed-event-queue";
         public const string StockReservedQueueName = "stock-reserved-queue";
+        public const string UserCreatedMailQueueName = "user-created-mail-queue";
     }
 }

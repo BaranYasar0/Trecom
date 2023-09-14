@@ -14,6 +14,6 @@
         public override void RemoveObserver(IUserObserver observer) => observers.Remove(observer);
 
         public override void NotifyObservers(object? item) =>
-            observers.ForEach(observer => observer.UserCreated(item as Models.Entities.User));
+            observers.ForEach(observer => observer.UserCreatedAsync(item as Models.Entities.User));
     }
 }

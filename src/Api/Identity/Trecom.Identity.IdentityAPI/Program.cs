@@ -1,5 +1,6 @@
 using System.Reflection;
 using System.Text;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMassTransit(config =>
+{
+    config.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMqSettings:Host"]);
+        
+    });
+});
+
 builder.Services.AddDbContext<AppDbContext>(x =>
 {
     x.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon"));
@@ -34,7 +44,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenHelper, JwtHelper>();
 builder.Services.AddScoped<AuthBusinessRules>();
 
-builder.Services.AddSingleton<ObserverBuilder<IUserObserver>>(sp =>
+builder.Services.AddScoped<ObserverBuilder<IUserObserver>>(sp =>
 {
     UserObserverBuilder observerBuilder = new UserObserverBuilder();
 
@@ -51,22 +61,6 @@ builder.Services.AddMediatR(x =>
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-//TokenOptions? tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
-
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuer = true,
-//            ValidateAudience = true,
-//            ValidateLifetime = false,
-//            ValidateIssuerSigningKey = true,
-//            ValidIssuer = tokenOptions.Issuer,
-//            ValidAudience = tokenOptions.Audience,
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey))
-//        };
-//    });
 
 var app = builder.Build();
 

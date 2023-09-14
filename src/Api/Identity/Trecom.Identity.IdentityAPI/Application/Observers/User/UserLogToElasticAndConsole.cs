@@ -12,15 +12,12 @@ public class UserLogToElasticAndConsole : IUserObserver
         this.sp = sp;
     }
 
-    public void Execute()
-    {
-        UserCreated(user);
-    }
-
-    public void UserCreated(Models.Entities.User user)
+    public Task UserCreatedAsync(Models.Entities.User user)
     {
         var logger = sp.GetRequiredService<ILogger<UserLogToElasticAndConsole>>();
         
-        logger.LogInformation($"{user.FirstName} için {this.GetType().FullName} observer pattern deneniyor");
+        logger.LogInformation($"{user.FirstName} için {this.GetType().Name}'de observer pattern deneniyor");
+
+        return Task.CompletedTask;
     }
 }

@@ -4,5 +4,5 @@ namespace Trecom.Api.Identity.Application.Observers.User;
 
 public interface IUserObserver : IObserver
 {
-    public void UserCreated(Models.Entities.User user);
+    public Task UserCreatedAsync(Models.Entities.User user);
 }
