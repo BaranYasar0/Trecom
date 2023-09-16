@@ -19,11 +19,14 @@ namespace Trecom.Api.Services.Catalog.Application.Features
             CreateMap<CreateProductDto, Product>();
             CreateMap<Product, CreateProductResponseDto>();
             
+
+
             CreateMap<Brand, BrandResponseDto>();
             CreateMap<Supplier, SupplierResponseDto>();
             CreateMap<SpecificCategory, SpecificCategoryResponseDto>();
             CreateMap<TypeCategory, TypeCategoryResponseDto>();
-            CreateMap<BaseCategory, BaseCategoryResponseDto>();
+            CreateMap<CreateCategoryDto, Category>();
+            CreateMap<Category, CategoryResponseDto>();
         }
     }
 }

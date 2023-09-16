@@ -25,8 +25,8 @@ namespace Trecom.Api.Services.Catalog.Extensions
             services.AddMassTransitServices(configuration);
 
             services.AddScoped<ProductRepository>();
-            services.AddScoped<BrandRepository>();
-
+            services.AddScoped<BrandRepository>();  
+            services.AddScoped<CategoryRepository>();
             services.AddTransient(typeof(IPipelineBehavior<,>), (typeof(ValidationPipelineBehavior<,>)));
             services.AddTransient(typeof(IPipelineBehavior<,>), (typeof(LoggingPipelineBehavior<,>)));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingPipelineBehavior<,>));
@@ -45,9 +45,7 @@ namespace Trecom.Api.Services.Catalog.Extensions
             var client = new ElasticsearchClient(settings);
 
             services.AddSingleton(client);
-            //services.AddDbContext<AppDbContext>(x =>
-            //{
-            //    x.UseSqlServer(configuration.GetConnectionString("SqlCon"));
+            //services.AddDbContext<AppDbContext>(x =>            //    x.UseSqlServer(configuration.GetConnectionString("SqlCon"));
             //});
         }
     }

@@ -1,4 +1,5 @@
 using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using Trecom.Api.Services.MailService.Consumers;
 using Trecom.Api.Services.MailService.Models;
 using Trecom.Api.Services.MailService.Services;
@@ -13,9 +14,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddDbContext<MailDbContext>(x =>
+{
+    x.UseSqlServer(builder.Configuration["SqlCon"]);
+});
+
 builder.Services.Configure<EmailConfiguration>(
     builder.Configuration.GetSection("EmailConfiguration")
 );
+builder.Services.AddScoped<IMailService, MailService>();
 
 builder.Services.AddMassTransit(config =>
 {
@@ -32,7 +39,6 @@ builder.Services.AddMassTransit(config =>
     });
 });
 
-builder.Services.AddScoped<IMailService, MailService>();
 
 var app = builder.Build();
 

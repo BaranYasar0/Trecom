@@ -5,5 +5,6 @@
         public string ProductIndexName { get; set; }
         public string BrandIndexName { get; set; }
         public string SupplierIndexName { get; set; }
+        public string CategoryIndexName { get; set; }
     }
 }

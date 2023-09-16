@@ -43,7 +43,7 @@ public class AuthService : IAuthService
 
         ApiResponse<SignInViewModel> result = await response?.Content?.ReadFromJsonAsync<ApiResponse<SignInViewModel>>();
 
-        if (!result.ValidateSuccess())
+        if (!result.IsSuccess)
         {
             return new BaseViewModel<SignInViewModel?>
             {

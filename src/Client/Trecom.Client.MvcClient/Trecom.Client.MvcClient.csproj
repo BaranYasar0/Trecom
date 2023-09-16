@@ -15,8 +15,4 @@
     <ProjectReference Include="..\..\Shared\Trecom.Shared\Trecom.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>

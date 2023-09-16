@@ -1,4 +1,4 @@
-﻿namespace Trecom.Client.MvcClient.Services;
+﻿namespace Trecom.Client.MvcClient.Models.InputModels;
 
 public record SignInInputModel(
     string Email,

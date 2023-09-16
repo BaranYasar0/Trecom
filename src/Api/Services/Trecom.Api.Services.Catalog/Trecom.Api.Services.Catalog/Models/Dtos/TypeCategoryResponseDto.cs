@@ -3,5 +3,5 @@
 public class TypeCategoryResponseDto
 {
     public string Name { get; set; }
-    public BaseCategoryResponseDto Category { get; set; }
+    public CategoryResponseDto Category { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿namespace Trecom.Client.MvcClient.Services;
+﻿namespace Trecom.Client.MvcClient.Models.ViewModels;
 
 public record SignInViewModel
 {

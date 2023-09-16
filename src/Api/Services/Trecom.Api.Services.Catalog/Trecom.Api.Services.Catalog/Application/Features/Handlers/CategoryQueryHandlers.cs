@@ -4,35 +4,41 @@ using Trecom.Api.Services.Catalog.Application.Features.Queries;
 using Trecom.Api.Services.Catalog.Models.Dtos;
 using Trecom.Api.Services.Catalog.Models.ViewModels;
 using Trecom.Api.Services.Catalog.Persistance.Repository;
+using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Application.Features.Handlers
 {
     public class CategoryQueryHandlers :
-        IRequestHandler<GetBaseCategoryListQuery, PaginationViewModel<BaseCategoryResponseDto>>
-        //IRequestHandler<GetSpecificCategoriesByTypeCategoryIdQuery, PaginationViewModel<BaseCategoryResponseDto>>,
-        //IRequestHandler<GetTypeCategoriesByBaseCategoryIdQuery, PaginationViewModel<BaseCategoryResponseDto>>
+        IRequestHandler<GetCategoryListQuery, ApiResponse<PaginationViewModel<CategoryResponseDto>>>
+        //IRequestHandler<GetSpecificCategoriesByTypeCategoryIdQuery, PaginationViewModel<CategoryResponseDto>>,
+        //IRequestHandler<GetTypeCategoriesByBaseCategoryIdQuery, PaginationViewModel<CategoryResponseDto>>
     {
         private readonly IMapper mapper;
         private readonly ILogger<CategoryQueryHandlers> logger;
         private readonly ProductRepository productRepository;
-        public CategoryQueryHandlers(IMapper mapper, ILogger<CategoryQueryHandlers> logger, ProductRepository productRepository)
+        private readonly CategoryRepository categoryRepository;
+        public CategoryQueryHandlers(IMapper mapper, ILogger<CategoryQueryHandlers> logger, ProductRepository productRepository, CategoryRepository categoryRepository)
         {
             this.mapper = mapper;
             this.logger = logger;
             this.productRepository = productRepository;
+            this.categoryRepository = categoryRepository;
         }
 
-        public async Task<PaginationViewModel<BaseCategoryResponseDto>> Handle(GetBaseCategoryListQuery request, CancellationToken cancellationToken)
+        public async Task<ApiResponse<PaginationViewModel<CategoryResponseDto>>> Handle(GetCategoryListQuery request, CancellationToken cancellationToken)
         {
-            return await productRepository.GetBaseCategoriesAsync(request.Pagination);
+            var categories= await categoryRepository.GetAllCategoriesAsync(request.Pagination);
+
+            return ApiResponse<PaginationViewModel<CategoryResponseDto>>
+                .Success(mapper.Map<PaginationViewModel<CategoryResponseDto>>(categories));
         }
 
-        //public async Task<PaginationViewModel<BaseCategoryResponseDto>> Handle(GetSpecificCategoriesByTypeCategoryIdQuery request, CancellationToken cancellationToken)
+        //public async Task<PaginationViewModel<CategoryResponseDto>> Handle(GetSpecificCategoriesByTypeCategoryIdQuery request, CancellationToken cancellationToken)
         //{
 
         //}
 
-        //public async Task<PaginationViewModel<BaseCategoryResponseDto>> Handle(GetTypeCategoriesByBaseCategoryIdQuery request, CancellationToken cancellationToken)
+        //public async Task<PaginationViewModel<CategoryResponseDto>> Handle(GetTypeCategoriesByBaseCategoryIdQuery request, CancellationToken cancellationToken)
         //{
 
         //}

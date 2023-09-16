@@ -54,7 +54,7 @@ namespace Trecom.Shared.CCS.GlobalException
             var errors = ((FluentValidation.ValidationException)exception).Errors;
             
 
-            return context.Response.WriteAsync(new ApiResponse()
+            return context.Response.WriteAsync(new ApiResponse<NoContent>()
             {
                 StatusCode = StatusCodes.Status400BadRequest,
                 Title = "Validation error(s)",
@@ -68,7 +68,7 @@ namespace Trecom.Shared.CCS.GlobalException
         {
             context.Response.StatusCode = Convert.ToInt32(HttpStatusCode.Unauthorized);
 
-            return context.Response.WriteAsync(new ApiResponse()
+            return context.Response.WriteAsync(new ApiResponse<NoContent>()
             {
                 Title = "Authorization Exception",
                 Errors = new List<string> { exception.Message },
@@ -83,9 +83,9 @@ namespace Trecom.Shared.CCS.GlobalException
         {
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            return context.Response.WriteAsync(new ApiResponse()
+            return context.Response.WriteAsync(new ApiResponse<NoContent>()
             {
-                Title = "Internal Exception",
+                Title = exception.GetType().Name,
                 Errors = new List<string> { exception.Message },
                 StatusCode = StatusCodes.Status400BadRequest,
                 ResponseTime = DateTime.Now,
@@ -97,7 +97,7 @@ namespace Trecom.Shared.CCS.GlobalException
         {
             httpContext.Response.StatusCode = Convert.ToInt32(HttpStatusCode.BadRequest);
 
-            return httpContext.Response.WriteAsync(new ApiResponse()
+            return httpContext.Response.WriteAsync(new ApiResponse<NoContent>()
             {
                 Title = "Business Exception",
                 Errors = new List<string> { exception.Message },

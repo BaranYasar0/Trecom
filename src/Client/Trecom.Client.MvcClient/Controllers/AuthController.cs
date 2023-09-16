@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Trecom.Client.MvcClient.Models.InputModels;
-using Trecom.Client.MvcClient.Services;
 using Trecom.Client.MvcClient.Services.Interfaces;
 
 namespace Trecom.Client.MvcClient.Controllers

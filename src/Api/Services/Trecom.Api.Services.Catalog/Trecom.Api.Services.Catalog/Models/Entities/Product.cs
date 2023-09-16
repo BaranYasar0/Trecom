@@ -25,8 +25,8 @@ namespace Trecom.Api.Services.Catalog.Models.Entities
         public ColorType? Color { get; set; }
 
         //RELATIONS
-        [JsonPropertyName("specific_category_id")]
-        public Guid SpecificCategoryId { get; set; }
+        [JsonPropertyName("category_id")]
+        public Guid CategoryId { get; set; }
         [JsonPropertyName("supplier_id")]
         public Guid SupplierId { get; set; }
         [JsonPropertyName("brand_id")]

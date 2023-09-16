@@ -6,7 +6,7 @@ namespace Trecom.Api.Services.Catalog.Models.Dtos
     {
         public string Name { get; set; }
         public decimal UnitPrice { get; set; }
-        public List<string> Categories { get; set; }
+        public Guid CategoryId { get; set; }
         public Guid BrandId { get; set; }
         public Guid SupplierId { get; set; }
 

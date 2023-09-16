@@ -2,6 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Trecom.Client.MvcClient.Controllers;
+using Trecom.Client.MvcClient.Extensions;
 using Trecom.Client.MvcClient.Handlers;
 using Trecom.Client.MvcClient.Services;
 using Trecom.Client.MvcClient.Services.Interfaces;
@@ -11,13 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddTransient<ExceptionHandlerDelegate>();
 
-builder.Services.AddHttpClient<IAuthService, AuthService>(x =>
-{
-    x.BaseAddress = new Uri("https://localhost:5000/identity/auth/");
-});
+builder.Services.RegisterHttpServices(builder.Configuration);
+builder.Services.RegisterRequiredServices();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opt =>
