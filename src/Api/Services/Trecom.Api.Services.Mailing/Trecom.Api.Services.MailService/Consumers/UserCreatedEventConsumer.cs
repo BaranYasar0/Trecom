@@ -3,29 +3,28 @@ using Trecom.Api.Identity.Application.Events;
 using Trecom.Api.Services.MailService.Constants;
 using Trecom.Api.Services.MailService.Services;
 
-namespace Trecom.Api.Services.MailService.Consumers
+namespace Trecom.Api.Services.MailService.Consumers;
+
+public class UserCreatedEventConsumer : IConsumer<UserCreatedEvent>
 {
-    public class UserCreatedEventConsumer : IConsumer<UserCreatedEvent>
+    private readonly IMailService mailService;
+
+    public UserCreatedEventConsumer(IMailService mailService)
     {
-        private readonly IMailService mailService;
+        this.mailService = mailService;
+    }
 
-        public UserCreatedEventConsumer(IMailService mailService)
+    public async Task Consume(ConsumeContext<UserCreatedEvent> context)
+    {
+        try
         {
-            this.mailService = mailService;
+            await mailService.SendEmailAsync("byasarn@gmail.com", MailingConstants.UserCreatedMailSubject,
+                @"<span class=""badge badge-pill badge-light"">asda</span>");
         }
-
-        public async Task Consume(ConsumeContext<UserCreatedEvent> context)
+        catch (Exception e)
         {
-            try
-            {
-                await mailService.SendEmailAsync("byasarn@gmail.com", MailingConstants.UserCreatedMailSubject,
-                      @"<span class=""badge badge-pill badge-light"">asda</span>");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

@@ -9,10 +9,9 @@ using Trecom.Shared.Models;
 using Trecom.Shared.Pipelines.Authorization;
 using Trecom.Shared.Pipelines.Logging;
 
-namespace Trecom.Api.Services.Order.Application.Features.Commands
+namespace Trecom.Api.Services.Order.Application.Features.Commands;
+
+public record CreateOrderCommand(CreateOrderDto CreateOrderDto) : CommandBase<OrderResponseDto>,ISecuredRequest
 {
-    public record CreateOrderCommand(CreateOrderDto CreateOrderDto) : CommandBase<OrderResponseDto>,ISecuredRequest
-    {
-        public string[] Roles => new[] { BusinessRoleConstants.Admin, BusinessRoleConstants.User,BusinessRoleConstants.Moderator };
-    }
+    public string[] Roles => new[] { BusinessRoleConstants.Admin, BusinessRoleConstants.User,BusinessRoleConstants.Moderator };
 }

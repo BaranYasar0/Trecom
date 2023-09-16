@@ -5,9 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
 
-namespace Trecom.Shared.Events.Interfaces
+namespace Trecom.Shared.Events.Interfaces;
+
+public interface IPaymentCompletedEvent:CorrelatedBy<Guid>
 {
-    public interface IPaymentCompletedEvent:CorrelatedBy<Guid>
-    {
-    }
 }

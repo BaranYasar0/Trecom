@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Trecom.Client.MvcClient.Controllers
+namespace Trecom.Client.MvcClient.Controllers;
+
+public class BasketController : Controller
 {
-    public class BasketController : Controller
+    public IActionResult GetBasket()
     {
-        public IActionResult GetBasket()
-        {
-            return View();
-        }
+        return View();
     }
 }

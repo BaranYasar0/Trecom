@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Trecom.Client.MvcClient.Components.User
+namespace Trecom.Client.MvcClient.Components.User;
+
+public class UserDashboardSidebarProfileComponent:ViewComponent
 {
-    public class UserDashboardSidebarProfileComponent:ViewComponent
+    public IViewComponentResult Invoke()
     {
-        public IViewComponentResult Invoke()
-        {
-            return View();
-        }
+        return View();
     }
 }

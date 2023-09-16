@@ -5,10 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
 
-namespace Trecom.Shared.Events.Interfaces
+namespace Trecom.Shared.Events.Interfaces;
+
+public interface IOrderCompletedRequestEvent:CorrelatedBy<Guid>
 {
-    public interface IOrderCompletedRequestEvent:CorrelatedBy<Guid>
-    {
-        public Guid OrderId { get; set; }
-    }
+    public Guid OrderId { get; set; }
 }

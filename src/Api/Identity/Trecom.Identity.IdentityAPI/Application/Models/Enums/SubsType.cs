@@ -1,7 +1,6 @@
-﻿namespace Trecom.Api.Identity.Application.Models.Enums
-{
-    public enum SubsType
-    {
+﻿namespace Trecom.Api.Identity.Application.Models.Enums;
 
-    }
+public enum SubsType
+{
+
 }

@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trecom.Shared.Services.Interfaces
-{
-    public interface ISharedUserService
-    {
-        public Task<string> GetUserIdAsync();
+namespace Trecom.Shared.Services.Interfaces;
 
-    }
+public interface ISharedUserService
+{
+    public Task<string> GetUserIdAsync();
+
 }

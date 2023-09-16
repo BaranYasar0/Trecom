@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
 
-namespace Trecom.Shared.Events.Interfaces
+namespace Trecom.Shared.Events.Interfaces;
+
+public interface IPaymentStartedRequestEvent:CorrelatedBy<Guid>
 {
-    public interface IPaymentStartedRequestEvent:CorrelatedBy<Guid>
-    {
-        public string CardNumber { get; set; }
-        public List<OrderItemMessage> OrderItems { get; set; }
-    }
+    public string CardNumber { get; set; }
+    public List<OrderItemMessage> OrderItems { get; set; }
 }

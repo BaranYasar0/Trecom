@@ -17,29 +17,28 @@ using Trecom.Shared.Pipelines.Logging;
 using Trecom.Shared.Services;
 using Trecom.Shared.Services.Interfaces;
 
-namespace Trecom.Api.Services.Order.Application.Extensions
+namespace Trecom.Api.Services.Order.Application.Extensions;
+
+public static class ApplicationServiceRegistration
 {
-    public static class ApplicationServiceRegistration
+    public static IServiceCollection AddRequiredApplicationServices(this IServiceCollection services)
     {
-        public static IServiceCollection AddRequiredApplicationServices(this IServiceCollection services)
+        services.AddMediatR(x =>
         {
-            services.AddMediatR(x =>
-            {
-                x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            });
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            x.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+        });
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
-            services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<OrderBusinessRules>();
-            services.AddTransient<ISharedUserService, SharedUserService>();
+        services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<OrderBusinessRules>();
+        services.AddTransient<ISharedUserService, SharedUserService>();
 
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationPipelineBehavior<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuthorizationPipelineBehavior<,>));
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
             
 
-            return services;
-        }
+        return services;
     }
 }

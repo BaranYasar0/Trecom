@@ -1,12 +1,11 @@
-﻿namespace Trecom.Api.Identity.Application.Models.Dtos
-{
-    public class UserQueryDto
-    {
-        public Guid Id { get; set; }
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public bool Status { get; set; }
+﻿namespace Trecom.Api.Identity.Application.Models.Dtos;
 
-    }
+public class UserQueryDto
+{
+    public Guid Id { get; set; }
+    public string Email { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public bool Status { get; set; }
+
 }

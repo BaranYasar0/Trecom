@@ -1,9 +1,8 @@
 ﻿using Trecom.Client.MvcClient.Models.ViewModels;
 
-namespace Trecom.Client.MvcClient.Services.Interfaces
+namespace Trecom.Client.MvcClient.Services.Interfaces;
+
+public interface ICategoryService
 {
-    public interface ICategoryService
-    {
-        Task<List<CategoryViewModel>> GetCategoriesAsync();
-    }
+    Task<List<CategoryViewModel>> GetCategoriesAsync();
 }

@@ -14,24 +14,23 @@ using Trecom.Shared.Events;
 using Trecom.Shared.Events.Interfaces;
 using Trecom.Api.Services.Order.Domain.Entities;
 
-namespace Trecom.Api.Services.Order.Application.Consumers
+namespace Trecom.Api.Services.Order.Application.Consumers;
+
+public class BasketCheckOutEventConsumer : IConsumer<IBasketCheckOutEvent>
 {
-    public class BasketCheckOutEventConsumer : IConsumer<IBasketCheckOutEvent>
+    private readonly IOrderService orderService;
+    private readonly IMapper mapper;
+
+    public BasketCheckOutEventConsumer(IOrderService orderService, IMapper mapper)
     {
-        private readonly IOrderService orderService;
-        private readonly IMapper mapper;
+        this.orderService = orderService;
+        this.mapper = mapper;
+    }
 
-        public BasketCheckOutEventConsumer(IOrderService orderService, IMapper mapper)
-        {
-            this.orderService = orderService;
-            this.mapper = mapper;
-        }
+    public async Task Consume(ConsumeContext<IBasketCheckOutEvent> context)
+    {
+        OrderDetailDto orderDetailDto = mapper.Map<OrderDetailDto>(context.Message);
 
-        public async Task Consume(ConsumeContext<IBasketCheckOutEvent> context)
-        {
-            OrderDetailDto orderDetailDto = mapper.Map<OrderDetailDto>(context.Message);
-
-            await orderService.CreateOrderRequest(new CreateOrderDto(orderDetailDto));
-        }
+        await orderService.CreateOrderRequest(new CreateOrderDto(orderDetailDto));
     }
 }

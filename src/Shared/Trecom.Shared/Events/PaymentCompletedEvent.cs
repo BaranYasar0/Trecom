@@ -5,15 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Trecom.Shared.Events.Interfaces;
 
-namespace Trecom.Shared.Events
-{
-    public class PaymentCompletedEvent:IPaymentCompletedEvent
-    {
-        public PaymentCompletedEvent(Guid correlationId)
-        {
-            CorrelationId = correlationId;
-        }
+namespace Trecom.Shared.Events;
 
-        public Guid CorrelationId { get; }
+public class PaymentCompletedEvent:IPaymentCompletedEvent
+{
+    public PaymentCompletedEvent(Guid correlationId)
+    {
+        CorrelationId = correlationId;
     }
+
+    public Guid CorrelationId { get; }
 }

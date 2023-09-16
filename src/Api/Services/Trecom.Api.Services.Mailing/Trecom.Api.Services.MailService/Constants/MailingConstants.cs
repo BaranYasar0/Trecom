@@ -1,7 +1,6 @@
-﻿namespace Trecom.Api.Services.MailService.Constants
+﻿namespace Trecom.Api.Services.MailService.Constants;
+
+public static class MailingConstants
 {
-    public static class MailingConstants
-    {
-        public static string UserCreatedMailSubject ="Hesabınız başarıyla Oluşturuldu";
-    }
+    public static string UserCreatedMailSubject ="Hesabınız başarıyla Oluşturuldu";
 }

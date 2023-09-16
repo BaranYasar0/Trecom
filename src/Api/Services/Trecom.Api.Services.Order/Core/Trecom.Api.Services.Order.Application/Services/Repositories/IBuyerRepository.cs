@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using Trecom.Api.Services.Order.Application.Services.Repositories.BaseInterfaces;
 using Trecom.Api.Services.Order.Domain.Entities;
 
-namespace Trecom.Api.Services.Order.Application.Services.Repositories
+namespace Trecom.Api.Services.Order.Application.Services.Repositories;
+
+public interface IBuyerRepository : IRepository<Buyer>
 {
-    public interface IBuyerRepository : IRepository<Buyer>
-    {
-    }
 }

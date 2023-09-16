@@ -5,28 +5,27 @@ using Trecom.Api.Services.Catalog.Models.Dtos;
 using Trecom.Api.Services.Catalog.Models.Entities;
 using Trecom.Api.Services.Catalog.Models.Enums;
 
-namespace Trecom.Api.Services.Catalog.Application.Features
-{
-    public class MappingProfiles : Profile
-    {
-        public MappingProfiles()
-        {
-            CreateMap<Product, ProductResponseDto>()
-                .ForMember(x => x.Supplier, y => y.MapFrom(x => x.Supplier))
-                .ForMember(x => x.Brand, y => y.MapFrom(x => x.Brand))
-                ;
+namespace Trecom.Api.Services.Catalog.Application.Features;
 
-            CreateMap<CreateProductDto, Product>();
-            CreateMap<Product, CreateProductResponseDto>();
+public class MappingProfiles : Profile
+{
+    public MappingProfiles()
+    {
+        CreateMap<Product, ProductResponseDto>()
+            .ForMember(x => x.Supplier, y => y.MapFrom(x => x.Supplier))
+            .ForMember(x => x.Brand, y => y.MapFrom(x => x.Brand))
+            ;
+
+        CreateMap<CreateProductDto, Product>();
+        CreateMap<Product, CreateProductResponseDto>();
             
 
 
-            CreateMap<Brand, BrandResponseDto>();
-            CreateMap<Supplier, SupplierResponseDto>();
-            CreateMap<SpecificCategory, SpecificCategoryResponseDto>();
-            CreateMap<TypeCategory, TypeCategoryResponseDto>();
-            CreateMap<CreateCategoryDto, Category>();
-            CreateMap<Category, CategoryResponseDto>();
-        }
+        CreateMap<Brand, BrandResponseDto>();
+        CreateMap<Supplier, SupplierResponseDto>();
+        CreateMap<SpecificCategory, SpecificCategoryResponseDto>();
+        CreateMap<TypeCategory, TypeCategoryResponseDto>();
+        CreateMap<CreateCategoryDto, Category>();
+        CreateMap<Category, CategoryResponseDto>();
     }
 }

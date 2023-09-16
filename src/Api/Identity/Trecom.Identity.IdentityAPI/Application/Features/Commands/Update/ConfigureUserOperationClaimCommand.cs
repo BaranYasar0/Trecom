@@ -5,39 +5,38 @@ using Trecom.Api.Identity.Application.Models.Dtos;
 using Trecom.Api.Identity.Application.Models.Entities;
 using Trecom.Api.Identity.EntityFramework;
 
-namespace Trecom.Api.Identity.Application.Features.Commands.Update
+namespace Trecom.Api.Identity.Application.Features.Commands.Update;
+
+public class ConfigureUserOperationClaimCommand:IRequest<ConfigureClaimResponseDto>
 {
-    public class ConfigureUserOperationClaimCommand:IRequest<ConfigureClaimResponseDto>
+    public Guid UserId { get; set; }
+    public int OperationClaimId { get; set; }
+
+    public class ConfigureUserOperationClaimCommandHandler:IRequestHandler<ConfigureUserOperationClaimCommand, ConfigureClaimResponseDto>
     {
-        public Guid UserId { get; set; }
-        public int OperationClaimId { get; set; }
+        private readonly AppDbContext _context;
 
-        public class ConfigureUserOperationClaimCommandHandler:IRequestHandler<ConfigureUserOperationClaimCommand, ConfigureClaimResponseDto>
+        public ConfigureUserOperationClaimCommandHandler(AppDbContext context)
         {
-            private readonly AppDbContext _context;
+            _context = context;
+        }
 
-            public ConfigureUserOperationClaimCommandHandler(AppDbContext context)
+        public async Task<ConfigureClaimResponseDto> Handle(ConfigureUserOperationClaimCommand request, CancellationToken cancellationToken)
+        {
+            UserOperationClaim userOperationClaim = new UserOperationClaim() { UserId = request.UserId,OperationClaimId = request.OperationClaimId};
+
+            var entity = await _context.UserOperationClaims.AddAsync(userOperationClaim);
+            await _context.SaveChangesAsync();
+            if (entity != null)
             {
-                _context = context;
-            }
-
-            public async Task<ConfigureClaimResponseDto> Handle(ConfigureUserOperationClaimCommand request, CancellationToken cancellationToken)
-            {
-                UserOperationClaim userOperationClaim = new UserOperationClaim() { UserId = request.UserId,OperationClaimId = request.OperationClaimId};
-
-                var entity = await _context.UserOperationClaims.AddAsync(userOperationClaim);
-                await _context.SaveChangesAsync();
-                if (entity != null)
+                return new ConfigureClaimResponseDto()
                 {
-                    return new ConfigureClaimResponseDto()
-                    {
-                        UserId = entity.Entity.UserId,
-                        OperationClaimId = entity.Entity.OperationClaimId
-                    };
-                }
-
-                return null;
+                    UserId = entity.Entity.UserId,
+                    OperationClaimId = entity.Entity.OperationClaimId
+                };
             }
+
+            return null;
         }
     }
 }

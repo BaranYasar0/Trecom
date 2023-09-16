@@ -1,13 +1,12 @@
 ﻿using Trecom.Api.Identity.Application.Models.Dtos;
 using Trecom.Api.Identity.Application.Models.Entities;
 
-namespace Trecom.Api.Identity.Application.Features.Profile
+namespace Trecom.Api.Identity.Application.Features.Profile;
+
+public class MappingProfiles:AutoMapper.Profile
 {
-    public class MappingProfiles:AutoMapper.Profile
+    public MappingProfiles()
     {
-        public MappingProfiles()
-        {
-            CreateMap<User, UserQueryDto>().ReverseMap();
-        }
+        CreateMap<User, UserQueryDto>().ReverseMap();
     }
 }

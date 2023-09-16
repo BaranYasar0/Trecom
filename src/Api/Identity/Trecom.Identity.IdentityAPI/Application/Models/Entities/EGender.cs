@@ -1,9 +1,8 @@
 ﻿
-namespace Trecom.Api.Identity.Application.Models.Entities
+namespace Trecom.Api.Identity.Application.Models.Entities;
+
+public enum EGender
 {
-    public enum EGender
-    {
-        Male,
-        Female
-    }
+    Male,
+    Female
 }

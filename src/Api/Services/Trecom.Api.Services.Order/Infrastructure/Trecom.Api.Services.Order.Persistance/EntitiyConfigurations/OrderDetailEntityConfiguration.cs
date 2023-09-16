@@ -8,39 +8,38 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Trecom.Api.Services.Order.Domain.Entities;
 
-namespace Trecom.Api.Services.Order.Persistance.EntitiyConfigurations
+namespace Trecom.Api.Services.Order.Persistance.EntitiyConfigurations;
+
+public class OrderDetailEntityConfiguration:BaseEntityConfiguration<OrderDetail>
 {
-    public class OrderDetailEntityConfiguration:BaseEntityConfiguration<OrderDetail>
+    public override void Configure(EntityTypeBuilder<OrderDetail> builder)
     {
-        public override void Configure(EntityTypeBuilder<OrderDetail> builder)
-        {
-            base.Configure(builder);
-            builder.Property(x => x.DeliveryNumber)
-                .HasColumnType("bigint")
-                .IsRequired();
+        base.Configure(builder);
+        builder.Property(x => x.DeliveryNumber)
+            .HasColumnType("bigint")
+            .IsRequired();
 
-            builder.Property(x => x.TotalPrice)
-                .HasColumnType("decimal")
-                .HasPrecision(10, 2)
-                .IsRequired();
+        builder.Property(x => x.TotalPrice)
+            .HasColumnType("decimal")
+            .HasPrecision(10, 2)
+            .IsRequired();
 
-            builder.Property(x => x.DeliveryDate)
-                .HasColumnType("datetime")
-                .IsRequired();
+        builder.Property(x => x.DeliveryDate)
+            .HasColumnType("datetime")
+            .IsRequired();
 
-            builder.Property(x=>x.DeliveryType)
-                .IsRequired(false)
-                .HasConversion<int>();
+        builder.Property(x=>x.DeliveryType)
+            .IsRequired(false)
+            .HasConversion<int>();
 
-            builder.HasOne(x => x.Order)
-                .WithOne(x => x.OrderDetail)
-                .HasForeignKey<OrderDetail>(x => x.OrderId);
+        builder.HasOne(x => x.Order)
+            .WithOne(x => x.OrderDetail)
+            .HasForeignKey<OrderDetail>(x => x.OrderId);
 
-            builder.HasMany(x => x.OrderItems)
-                .WithOne(x => x.OrderDetail)
-                .HasForeignKey(x => x.OrderDetailId);
+        builder.HasMany(x => x.OrderItems)
+            .WithOne(x => x.OrderDetail)
+            .HasForeignKey(x => x.OrderDetailId);
 
-            builder.OwnsOne(x => x.Address,y=>y.Property(a=>a.City).IsRequired(false));
-        }
+        builder.OwnsOne(x => x.Address,y=>y.Property(a=>a.City).IsRequired(false));
     }
 }

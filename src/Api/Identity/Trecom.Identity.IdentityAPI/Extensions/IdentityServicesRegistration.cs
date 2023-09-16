@@ -6,30 +6,29 @@ using Trecom.Api.Identity.EntityFramework;
 using Trecom.Api.Identity.Services.Interfaces;
 using Watchflix.Api.Identity.Services;
 
-namespace Watchflix.Api.Identity.Extensions
+namespace Watchflix.Api.Identity.Extensions;
+
+public static class IdentityServicesRegistration
 {
-    public static class IdentityServicesRegistration
+    public static IServiceCollection AddIdentityServices(this IServiceCollection services,
+        IConfiguration configuration)
     {
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services,
-            IConfiguration configuration)
+
+        services.AddDbContext<AppDbContext>(opt =>
         {
+            opt.UseSqlServer(configuration.GetConnectionString("SqlCon"));
+        });
 
-            services.AddDbContext<AppDbContext>(opt =>
-            {
-                opt.UseSqlServer(configuration.GetConnectionString("SqlCon"));
-            });
+        services.AddScoped<ITokenHelper, JwtHelper>();
+        services.AddScoped<AuthBusinessRules>();
+        services.AddScoped<IAuthService, AuthService>();
 
-            services.AddScoped<ITokenHelper, JwtHelper>();
-            services.AddScoped<AuthBusinessRules>();
-            services.AddScoped<IAuthService, AuthService>();
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+        });
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-            services.AddMediatR(cfg =>
-            {
-                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            });
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
-            return services;
-        }
+        return services;
     }
 }

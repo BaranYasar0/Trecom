@@ -1,7 +1,6 @@
-﻿namespace Trecom.Api.Identity.Application.Observers
+﻿namespace Trecom.Api.Identity.Application.Observers;
+
+public interface IObserver
 {
-    public interface IObserver
-    {
-        //void Execute();
-    }
+    //void Execute();
 }

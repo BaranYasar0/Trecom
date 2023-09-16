@@ -1,8 +1,7 @@
-﻿namespace Trecom.Client.MvcClient.Models.Enums
+﻿namespace Trecom.Client.MvcClient.Models.Enums;
+
+public enum EGender
 {
-    public enum EGender
-    {
-        Male,
-        Female
-    }
+    Male,
+    Female
 }

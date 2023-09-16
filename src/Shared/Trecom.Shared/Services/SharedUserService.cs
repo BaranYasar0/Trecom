@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Trecom.Shared.Services.Interfaces;
 
-namespace Trecom.Shared.Services
+namespace Trecom.Shared.Services;
+
+public class SharedUserService:ISharedUserService
 {
-    public class SharedUserService:ISharedUserService
+    private readonly IHttpContextAccessor httpContextAccessor;
+
+    public SharedUserService(IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IHttpContextAccessor httpContextAccessor;
+        this.httpContextAccessor = httpContextAccessor;
+    }
 
-        public SharedUserService(IHttpContextAccessor httpContextAccessor)
-        {
-            this.httpContextAccessor = httpContextAccessor;
-        }
-
-        public async Task<string> GetUserIdAsync()
-        {
-            return await Task.FromResult(
-                httpContextAccessor?.HttpContext?.User?.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)!.Value!);
-        }
+    public async Task<string> GetUserIdAsync()
+    {
+        return await Task.FromResult(
+            httpContextAccessor?.HttpContext?.User?.FindFirst(x => x.Type == ClaimTypes.NameIdentifier)!.Value!);
     }
 }

@@ -9,31 +9,30 @@ using Trecom.Api.Services.Catalog.Extensions;
 using Trecom.Api.Services.Order.Application.Services.Repositories;
 using Trecom.Shared.Events.Interfaces;
 
-namespace Trecom.Api.Services.Order.Application.Consumers
+namespace Trecom.Api.Services.Order.Application.Consumers;
+
+public class OrderCompletedRequestEventConsumer:IConsumer<IOrderCompletedRequestEvent>
 {
-    public class OrderCompletedRequestEventConsumer:IConsumer<IOrderCompletedRequestEvent>
+    private readonly IOrderRepository orderRepository;
+    private readonly ILogger<OrderCompletedRequestEventConsumer> logger;
+
+    public OrderCompletedRequestEventConsumer(IOrderRepository orderRepository, ILogger<OrderCompletedRequestEventConsumer> logger)
     {
-        private readonly IOrderRepository orderRepository;
-        private readonly ILogger<OrderCompletedRequestEventConsumer> logger;
+        this.orderRepository = orderRepository.ValidateNull();
+        this.logger = logger;
+    }
 
-        public OrderCompletedRequestEventConsumer(IOrderRepository orderRepository, ILogger<OrderCompletedRequestEventConsumer> logger)
-        {
-            this.orderRepository = orderRepository.ValidateNull();
-            this.logger = logger;
-        }
+    public async Task Consume(ConsumeContext<IOrderCompletedRequestEvent> context)
+    {
+        logger.LogInformation($"{this.GetType().Name} started to consume {context.Message.GetType().Name}");
+        Domain.Entities.Order toBeUpdatedOrder =
+            await orderRepository.GetAsync(g => g.Id == context.Message.OrderId);
 
-        public async Task Consume(ConsumeContext<IOrderCompletedRequestEvent> context)
-        {
-            logger.LogInformation($"{this.GetType().Name} started to consume {context.Message.GetType().Name}");
-            Domain.Entities.Order toBeUpdatedOrder =
-                await orderRepository.GetAsync(g => g.Id == context.Message.OrderId);
+        if(toBeUpdatedOrder.ValidateNullBool())
+            await toBeUpdatedOrder.SetOrderStatusAsCompleted();
 
-            if(toBeUpdatedOrder.ValidateNullBool())
-                await toBeUpdatedOrder.SetOrderStatusAsCompleted();
+        await orderRepository.UpdateAsync(toBeUpdatedOrder);
 
-            await orderRepository.UpdateAsync(toBeUpdatedOrder);
-
-            logger.LogInformation($"Order with id: {toBeUpdatedOrder.Id} has been updated.");
-        }
+        logger.LogInformation($"Order with id: {toBeUpdatedOrder.Id} has been updated.");
     }
 }

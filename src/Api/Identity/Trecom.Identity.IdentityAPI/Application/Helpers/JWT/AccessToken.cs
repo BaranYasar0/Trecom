@@ -1,8 +1,7 @@
-﻿namespace Trecom.Api.Identity.Application.Helpers.JWT
+﻿namespace Trecom.Api.Identity.Application.Helpers.JWT;
+
+public class AccessToken
 {
-    public class AccessToken
-    {
-        public string Token { get; set; }
-        public DateTime Expiration { get; set; }
-    }
+    public string Token { get; set; }
+    public DateTime Expiration { get; set; }
 }

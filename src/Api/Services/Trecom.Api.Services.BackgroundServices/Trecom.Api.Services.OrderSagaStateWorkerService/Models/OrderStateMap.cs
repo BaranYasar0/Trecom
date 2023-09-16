@@ -6,13 +6,12 @@ using MassTransit;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace Trecom.Api.Services.OrderSagaStateWorkerService.Models
+namespace Trecom.Api.Services.OrderSagaStateWorkerService.Models;
+
+public class OrderStateMap : SagaClassMap<OrderStateInstance>
 {
-    public class OrderStateMap : SagaClassMap<OrderStateInstance>
+    protected override void Configure(EntityTypeBuilder<OrderStateInstance> entity, ModelBuilder model)
     {
-        protected override void Configure(EntityTypeBuilder<OrderStateInstance> entity, ModelBuilder model)
-        {
-            entity.Property(x => x.BuyerId).HasMaxLength(256);
-        }
+        entity.Property(x => x.BuyerId).HasMaxLength(256);
     }
 }

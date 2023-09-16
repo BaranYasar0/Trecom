@@ -2,21 +2,20 @@
 using Trecom.Client.MvcClient.Models.ViewModels;
 using Trecom.Client.MvcClient.Services.Interfaces;
 
-namespace Trecom.Client.MvcClient.Components.Header
+namespace Trecom.Client.MvcClient.Components.Header;
+
+public class HeaderCategoriesComponent:ViewComponent
 {
-    public class HeaderCategoriesComponent:ViewComponent
+    private readonly ICategoryService categoryService;
+
+    public HeaderCategoriesComponent(ICategoryService categoryService)
     {
-        private readonly ICategoryService categoryService;
+        this.categoryService = categoryService;
+    }
 
-        public HeaderCategoriesComponent(ICategoryService categoryService)
-        {
-            this.categoryService = categoryService;
-        }
-
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
-            List<CategoryViewModel> categories = await categoryService.GetCategoriesAsync();
-            return View(categories);
-        }
+    public async Task<IViewComponentResult> InvokeAsync()
+    {
+        List<CategoryViewModel> categories = await categoryService.GetCategoriesAsync();
+        return View(categories);
     }
 }

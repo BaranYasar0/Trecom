@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
 
-namespace Trecom.Shared.Events.Interfaces
-{
-    public interface IStockNotReservedEvent:CorrelatedBy<Guid>
-    {
-        public Guid OrderId { get; set; }
+namespace Trecom.Shared.Events.Interfaces;
 
-    }
+public interface IStockNotReservedEvent:CorrelatedBy<Guid>
+{
+    public Guid OrderId { get; set; }
+
 }

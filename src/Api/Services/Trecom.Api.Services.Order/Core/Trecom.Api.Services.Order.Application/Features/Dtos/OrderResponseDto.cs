@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Trecom.Api.Services.Order.Domain.Enums;
 
-namespace Trecom.Api.Services.Order.Application.Features.Dtos
+namespace Trecom.Api.Services.Order.Application.Features.Dtos;
+
+public class OrderResponseDto
 {
-    public class OrderResponseDto
-    {
-        public Guid Id { get; set; }
-        public OrderStatus OrderStatus { get; set; }
-    }
+    public Guid Id { get; set; }
+    public OrderStatus OrderStatus { get; set; }
 }
