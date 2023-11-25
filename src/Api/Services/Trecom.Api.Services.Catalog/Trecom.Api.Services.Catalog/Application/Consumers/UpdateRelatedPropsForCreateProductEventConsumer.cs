@@ -8,26 +8,27 @@ using Trecom.Api.Services.Catalog.Models.Entities;
 
 namespace Trecom.Api.Services.Catalog.Application.Consumers;
 
-public class UpdateBrandAndSupplierForCreateProductEventConsumer : IConsumer<UpdateBrandAndSupplierForCreateProductEvent>
+public class UpdateRelatedPropsForCreateProductEventConsumer : IConsumer<UpdateRelatedPropsForCreateProductEvent>
 {
     private readonly ElasticsearchClient client;
-    private readonly ILogger<UpdateBrandAndSupplierForCreateProductEventConsumer> logger;
+    private readonly ILogger<UpdateRelatedPropsForCreateProductEventConsumer> logger;
     private readonly ElasticIndexSettings elasticIndexSettings;
 
-    public UpdateBrandAndSupplierForCreateProductEventConsumer(ElasticsearchClient client, ILogger<UpdateBrandAndSupplierForCreateProductEventConsumer> logger, IOptions<ElasticIndexSettings> elasticIndexSettings)
+    public UpdateRelatedPropsForCreateProductEventConsumer(ElasticsearchClient client, ILogger<UpdateRelatedPropsForCreateProductEventConsumer> logger, IOptions<ElasticIndexSettings> elasticIndexSettings)
     {
         this.client = client;
         this.logger = logger;
         this.elasticIndexSettings = elasticIndexSettings.Value;
     }
 
-    public async Task Consume(ConsumeContext<UpdateBrandAndSupplierForCreateProductEvent> context)
+    public async Task Consume(ConsumeContext<UpdateRelatedPropsForCreateProductEvent> context)
     {
         var brandResponse = await client.GetAsync<Brand>(index: elasticIndexSettings.
             BrandIndexName, id: context.Message.BrandId);
 
         Brand toBeAddedBrand = new();
         Supplier toBeAddedSupplier = new();
+        Category toBeAddedCategory = new();
 
         if (brandResponse.NullBusinessValidation() && brandResponse.IsValidResponse && brandResponse.Source.NullBusinessValidation())
         {
@@ -42,6 +43,15 @@ public class UpdateBrandAndSupplierForCreateProductEventConsumer : IConsumer<Upd
             toBeAddedSupplier = supplierResponse.Source;
         }
 
+        var categoryResponse = await client.GetAsync<Category>(index: elasticIndexSettings.
+                       CategoryIndexName, id: context.Message.CategoryId);
+
+        if (categoryResponse.NullBusinessValidation() && categoryResponse.IsValidResponse &&
+            supplierResponse.Source.NullBusinessValidation())
+        {
+           toBeAddedCategory= categoryResponse.Source;
+        }
+        
         var productResponse = await client.GetAsync<Product>(index: elasticIndexSettings.
             ProductIndexName, id: context.Message.ProductId);
 
@@ -50,6 +60,7 @@ public class UpdateBrandAndSupplierForCreateProductEventConsumer : IConsumer<Upd
             Product? toBeUpdatedProduct = productResponse.Source;
             toBeUpdatedProduct.Brand = toBeAddedBrand;
             toBeUpdatedProduct.Supplier = toBeAddedSupplier;
+            toBeUpdatedProduct.Category = toBeAddedCategory;
 
             try
             {
@@ -63,7 +74,6 @@ public class UpdateBrandAndSupplierForCreateProductEventConsumer : IConsumer<Upd
                 logger.LogError(e, "Error while updating product");
                 throw;
             }
-
 
         }
 

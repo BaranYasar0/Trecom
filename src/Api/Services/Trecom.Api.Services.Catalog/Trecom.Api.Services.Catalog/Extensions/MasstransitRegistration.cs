@@ -12,14 +12,14 @@ public static class MasstransitRegistration
     {
         services.AddMassTransit(x =>
         {
-            x.AddConsumer<UpdateBrandAndSupplierForCreateProductEventConsumer>();
+            x.AddConsumer<UpdateRelatedPropsForCreateProductEventConsumer>();
             x.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host(configuration["RabbitMqSettings"]);
                     
                 cfg.ReceiveEndpoint(RabbitMqSettings.UpdateBrandAndSupplierForCreateProductEvent, e =>
                 {
-                    e.ConfigureConsumer<UpdateBrandAndSupplierForCreateProductEventConsumer>(context);
+                    e.ConfigureConsumer<UpdateRelatedPropsForCreateProductEventConsumer>(context);
                 });
 
             });

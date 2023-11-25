@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Trecom.Client.MvcClient.Controllers;
 using Trecom.Client.MvcClient.Extensions;
 using Trecom.Client.MvcClient.Handlers;
+using Trecom.Client.MvcClient.Middlewares;
 using Trecom.Client.MvcClient.Services;
 using Trecom.Client.MvcClient.Services.Interfaces;
 
@@ -39,6 +40,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseMiddleware<ClientExceptionHandler>();
 
 app.UseRouting();
 

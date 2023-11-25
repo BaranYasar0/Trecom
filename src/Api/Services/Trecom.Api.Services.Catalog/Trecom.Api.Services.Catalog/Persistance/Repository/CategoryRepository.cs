@@ -5,8 +5,8 @@ using Trecom.Api.Services.Catalog.Constants;
 using Trecom.Api.Services.Catalog.Extensions;
 using Trecom.Api.Services.Catalog.Models.Dtos;
 using Trecom.Api.Services.Catalog.Models.Entities;
-using Trecom.Api.Services.Catalog.Models.ViewModels;
 using Trecom.Shared.CCS.GlobalException;
+using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Persistance.Repository;
 

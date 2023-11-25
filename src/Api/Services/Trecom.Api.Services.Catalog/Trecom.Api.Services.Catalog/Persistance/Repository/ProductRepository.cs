@@ -9,8 +9,6 @@ using Trecom.Api.Services.Catalog.Constants;
 using Trecom.Api.Services.Catalog.Extensions;
 using Trecom.Api.Services.Catalog.Models.Dtos;
 using Trecom.Api.Services.Catalog.Models.Entities;
-using Trecom.Api.Services.Catalog.Models.ViewModels;
-using Trecom.Shared.CCS.GlobalException;
 using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Persistance.Repository;
@@ -77,7 +75,6 @@ public class ProductRepository
 
     public async Task<PaginationViewModel<ProductResponseDto>> GetProductsByNameAsync(string requestName, QueryPaginationDto requestPagination)
     {
-
         var response = await client.SearchAsync<Product>(s => s.Index(IndexSettings.ProductIndexName)
             .ConfigurePaginationParameters(requestPagination)
             .Query(q =>
@@ -137,17 +134,25 @@ public class ProductRepository
 
         return mapper.Map<ProductResponseDto>(product);
     }
-}
 
-public class DatabaseException : BusinessException
-{
-    public DatabaseException() : base()
+    public async Task<PaginationViewModel<ProductResponseDto>> GetProductListByQueryParameters()
     {
+        var response = await client.SearchAsync<Product>(s => s.Index(IndexSettings.ProductIndexName)
+            .Query(q =>
+                q.Bool(b =>
+                    b.Must(m =>
+                        m.Match(ma =>
+                            ma.Field(f =>
+                                f.CategoryId).Query("7097c12c-f274-4b75-84ea-ddfa45a80fb3"))))
+            ));
 
-    }
-    public DatabaseException(string? message) : base(message)
-    {
+        if (!response.IsValidResponse)
+            return PaginationViewModel<ProductResponseDto>.Create(new List<ProductResponseDto>(), response.Documents.Count);
+
+        var productList = response.Documents.NullBusinessValidation()? await response.GetDocumentsWithMatchedId() : new List<Product>();
+
+        return PaginationViewModel<ProductResponseDto>.Create(
+            mapper.Map<List<ProductResponseDto>>(productList)
+            , response.Documents.Count);
     }
 }
-
-

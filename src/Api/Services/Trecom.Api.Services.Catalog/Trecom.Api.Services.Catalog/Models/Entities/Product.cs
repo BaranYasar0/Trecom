@@ -32,10 +32,9 @@ public class Product : BaseEntity
     [JsonPropertyName("brand_id")]
     public Guid BrandId { get; set; }
 
-    [JsonPropertyName("specific_category")]
-    public SpecificCategory SpecificCategory { get; set; }
     public Supplier Supplier { get; set; }
     public Brand Brand { get; set; }
+    public Category Category { get; set; }
 
     public Product()
     {

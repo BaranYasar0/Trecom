@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Trecom.Api.Services.Catalog.Models.Dtos;
-using Trecom.Api.Services.Catalog.Models.ViewModels;
+using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Application.Features.Queries;
 
@@ -52,3 +52,5 @@ public record GetProductListByTypeCategoryId(Guid typeCategoryId, QueryPaginatio
     public string CacheKey => QueryMethods.SetCatchKey(this, Pagination);
     public TimeSpan? SlidingExpiration { get; }
 }
+
+public record GetProductListByQueryParameters : IRequest<PaginationViewModel<ProductResponseDto>>;

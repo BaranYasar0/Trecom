@@ -19,7 +19,7 @@ public static class ElasticsearchExtension
 
     public static Task<List<T>> GetDocumentsWithMatchedId<T>(this SearchResponse<T>? response) where T : BaseEntity
     {
-        if (response.NullValidation() && response.Hits.Any())
+        if (response.NullValidation()&&response.ApiCallDetails.HasSuccessfulStatusCode)
         {
             foreach (var hit in response.Hits)
             {

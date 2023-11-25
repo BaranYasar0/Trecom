@@ -26,6 +26,20 @@ public class BasketsController : ControllerBase
         return Ok(basket);
     }
 
+    [HttpPost("addBasketItem")]
+    public async Task<IActionResult> AddBasketItemAsync([FromBody]BasketItem basketItem)
+    {
+        var basket = await basketRepository.AddBasketItemAsync(basketItem);
+        return Ok(basket);
+    }
+
+    [HttpPost("changeBasketItemCount")]
+    public async Task<IActionResult> ChangeBasketItemCount([FromBody] BasketItem basketItem, [FromBody]int count)
+    {
+        var basket = await basketRepository.ChangeBasketItemCount(basketItem, count);
+        return Ok(basket);
+    }
+
     [HttpPost("updateBasket")]
     public async Task<IActionResult> UpdateBasketAsync([FromBody]UpdateBasketDto basket)
     {

@@ -37,6 +37,7 @@
 
   <ItemGroup>
     <Folder Include="Application\Services\" />
+    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>

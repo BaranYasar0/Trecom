@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Trecom.Api.Services.Catalog.Application.Features.Queries;
 using Trecom.Api.Services.Catalog.Models.Dtos;
-using Trecom.Api.Services.Catalog.Models.ViewModels;
 using Trecom.Api.Services.Catalog.Persistance.Repository;
+using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Application.Features.Handlers;
 
@@ -13,7 +13,8 @@ public class ProductQueryHandlers:
     IRequestHandler<GetProductListByIdsQuery,PaginationViewModel<ProductResponseDto>>,
     IRequestHandler<GetProductListByNameQuery,PaginationViewModel<ProductResponseDto>>,
     IRequestHandler<GetProductListByCategoryNameQuery,PaginationViewModel<ProductResponseDto>>,
-    IRequestHandler<GetProductListByBrandIdQuery,PaginationViewModel<ProductResponseDto>>
+    IRequestHandler<GetProductListByBrandIdQuery,PaginationViewModel<ProductResponseDto>>,
+    IRequestHandler<GetProductListByQueryParameters,PaginationViewModel<ProductResponseDto>>
 
 {
     private readonly ProductRepository productRepository;
@@ -63,5 +64,12 @@ public class ProductQueryHandlers:
         var paginableProductList=productRepository.GetProductsByBrandIdAsync(request.brandId, request.Pagination);
             
         return paginableProductList;
+    }
+
+    public async Task<PaginationViewModel<ProductResponseDto>> Handle(GetProductListByQueryParameters request, CancellationToken cancellationToken)
+    {
+        var productList = await productRepository.GetProductListByQueryParameters();
+
+        return productList;
     }
 }

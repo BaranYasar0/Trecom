@@ -10,4 +10,9 @@ public class ProductResponseDto
     public BrandResponseDto Brand { get; set; }
     public SupplierResponseDto Supplier { get; set; }
     public SpecificCategoryResponseDto Category { get; set; }
+
+    public ProductResponseDto()
+    {
+        
+    }
 }

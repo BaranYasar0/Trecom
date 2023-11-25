@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Trecom.Api.Services.Catalog.Models.ViewModels;
+﻿namespace Trecom.Shared.Models;
 
 public class PaginationViewModel<TEntity> where TEntity : class
 {
@@ -12,24 +10,24 @@ public class PaginationViewModel<TEntity> where TEntity : class
         get;
         set;
     }
-    public List<TEntity> Data { get; set; } = new List<TEntity>();
+    public List<TEntity> Items { get; set; } = new();
 
     public PaginationViewModel()
     {
-        Data = new List<TEntity>();
+        Items = new List<TEntity>();
     }
 
-    public PaginationViewModel(List<TEntity> data)
+    public PaginationViewModel(List<TEntity> items)
     {
-        Data = data;
+        Items = items;
         this.GeneratePropsExceptData();
     }
 
-    public PaginationViewModel(List<TEntity> data, int count, int pageSize, int page)
+    public PaginationViewModel(List<TEntity> items, int count, int pageSize, int page)
     {
         PageSize = pageSize;
         Page = page;
-        Data = data;
+        Items = items;
         Count = count;
     }
 

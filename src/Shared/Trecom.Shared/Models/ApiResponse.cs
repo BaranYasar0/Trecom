@@ -51,6 +51,13 @@ public class ApiResponse<T> where T:class
     {
         return JsonSerializer.Serialize(this);
     }
+
+    public bool ValidateSuccess()
+    {
+        if(Errors is not null && Errors.Any()) return false;
+        
+        return true;
+    }
 }
 
 

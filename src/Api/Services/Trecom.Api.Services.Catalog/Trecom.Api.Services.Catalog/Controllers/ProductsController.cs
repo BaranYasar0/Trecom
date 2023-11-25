@@ -8,9 +8,9 @@ using Trecom.Api.Services.Catalog.Application.Features.Commands;
 using Trecom.Api.Services.Catalog.Application.Features.Queries;
 using Trecom.Api.Services.Catalog.Models.Dtos;
 using Trecom.Api.Services.Catalog.Models.Entities;
-using Trecom.Api.Services.Catalog.Models.ViewModels;
 using Trecom.Api.Services.Catalog.Persistance.EntityFramework;
 using Trecom.Api.Services.Catalog.Persistance.Repository;
+using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Controllers;
 
@@ -18,7 +18,7 @@ namespace Trecom.Api.Services.Catalog.Controllers;
 [ApiController]
 public class ProductsController : BaseController
 {
-        
+
 
     [HttpGet]
     [Route("getList")]
@@ -57,7 +57,7 @@ public class ProductsController : BaseController
         //               .Query(q => q.MatchAll()));
 
         return Ok(/*result.Documents.ToList()*/);
-    } 
+    }
 
     [HttpGet]
     [Route("getByName")]
@@ -101,12 +101,19 @@ public class ProductsController : BaseController
 
     [HttpPost]
     [Route("create")]
-    [ProducesResponseType(type: typeof(CreateProductResponseDto), statusCode: 200)]
+    [ProducesResponseType(type: typeof(CreateProductDto), statusCode: 200)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
     public async Task<IActionResult> CreateAsync([FromBody] CreateProductCommand command)
     {
         return Ok(await MediatR.Send(command));
     }
 
-        
+    [HttpGet]
+    [Route("getListByParameters")]
+    [ProducesResponseType(type: typeof(IEnumerable<ProductResponseDto>), statusCode: 200)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    public async Task<IActionResult> GetProductListByQueryParametersAsync([FromQuery] QueryPaginationDto pagination)
+    {
+        return Ok(await MediatR.Send(new GetProductListByQueryParameters()));
+    }
 }

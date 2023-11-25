@@ -19,15 +19,22 @@ public class CategoryService : ICategoryService
     {
         HttpClient client = httpClientFactory.CreateClient("category");
 
-        var result= await client.GetAsync("categories?PageSize=50&Page=1");
+        var result = await client.GetAsync("categories?PageSize=50&Page=1");
+        result.EnsureSuccessStatusCode();
+        var response = await result.Content.ReadFromJsonAsync<ApiResponse<PaginationViewModel<CategoryViewModel>>>();
 
-        var data=await result.Content.ReadAsStringAsync();
-        ApiResponse<List<CategoryViewModel>> response = await client.GetFromJsonAsync<ApiResponse<List<CategoryViewModel>>>("categories");
-
-
-        if(!response.IsSuccess)
+        if (!response.ValidateSuccess())
             return Enumerable.Empty<CategoryViewModel>().ToList();
 
-        return response.Data;
+        response.Data.Items = response.Data.Items.OrderBy(x => x.Names[1]).ToList();
+
+        return response.Data.Items;
+    }
+
+    private List<CategoryViewModel> ConfigureCategoriesForOrder(List<CategoryViewModel> categories)
+    {
+        Func<CategoryViewModel, string> orderCateries = (CategoryViewModel categories) => categories.Names.FirstOrDefault();
+
+        return categories.OrderBy(orderCateries).ToList();
     }
 }

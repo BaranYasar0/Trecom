@@ -1,5 +1,4 @@
 ﻿using Trecom.Api.Services.Catalog.Models.Dtos;
-using Trecom.Api.Services.Catalog.Models.ViewModels;
 using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Application.Features.Queries;
