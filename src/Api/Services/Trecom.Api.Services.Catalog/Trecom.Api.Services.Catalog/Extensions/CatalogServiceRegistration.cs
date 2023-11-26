@@ -8,6 +8,7 @@ using Trecom.Api.Services.Catalog.Application.Features.Validators;
 using Trecom.Api.Services.Catalog.Constants;
 using Trecom.Api.Services.Catalog.Persistance;
 using Trecom.Api.Services.Catalog.Persistance.DataSeeding;
+using Trecom.Api.Services.Catalog.Persistance.EntityFramework;
 using Trecom.Api.Services.Catalog.Persistance.Repository;
 using Trecom.Shared.Pipelines;
 using Trecom.Shared.Pipelines.Catching;
@@ -45,7 +46,7 @@ public static class CatalogServiceRegistration
         var client = new ElasticsearchClient(settings);
 
         services.AddSingleton(client);
-        //services.AddDbContext<AppDbContext>(x =>            //    x.UseSqlServer(configuration.GetConnectionString("SqlCon"));
-        //});
+        services.AddDbContext<AppDbContext>(x => x.UseSqlServer(configuration.GetConnectionString("SqlCon")));
+
     }
 }

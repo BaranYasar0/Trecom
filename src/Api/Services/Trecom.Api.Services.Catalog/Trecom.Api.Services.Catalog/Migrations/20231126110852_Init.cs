@@ -9,8 +9,12 @@ namespace Trecom.Api.Services.Catalog.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "catalog");
+
             migrationBuilder.CreateTable(
                 name: "BaseCategories",
+                schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -28,6 +32,7 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Brands",
+                schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -43,6 +48,7 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Suppliers",
+                schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -63,6 +69,7 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
             migrationBuilder.CreateTable(
                 name: "TypeCategories",
+                schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -80,30 +87,53 @@ namespace Trecom.Api.Services.Catalog.Migrations
                     table.ForeignKey(
                         name: "FK_TypeCategories_BaseCategories_BaseCategoryId",
                         column: x => x.BaseCategoryId,
+                        principalSchema: "catalog",
                         principalTable: "BaseCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BrandSupplier",
+                name: "Products",
+                schema: "catalog",
                 columns: table => new
                 {
-                    BrandsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SuppliersId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    NAME = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    DESCRIPTION = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PICURL = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    UnitPrice = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false),
+                    BodyType = table.Column<int>(type: "int", nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: true),
+                    Color = table.Column<int>(type: "int", nullable: true),
+                    BaseCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BrandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ModifyDate = table.Column<DateTime>(type: "datetime", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BrandSupplier", x => new { x.BrandsId, x.SuppliersId });
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BrandSupplier_Brands_BrandsId",
-                        column: x => x.BrandsId,
+                        name: "FK_Products_BaseCategories_BaseCategoryId",
+                        column: x => x.BaseCategoryId,
+                        principalSchema: "catalog",
+                        principalTable: "BaseCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalSchema: "catalog",
                         principalTable: "Brands",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BrandSupplier_Suppliers_SuppliersId",
-                        column: x => x.SuppliersId,
+                        name: "FK_Products_Suppliers_SupplierId",
+                        column: x => x.SupplierId,
+                        principalSchema: "catalog",
                         principalTable: "Suppliers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -111,6 +141,7 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
             migrationBuilder.CreateTable(
                 name: "SpecificCategories",
+                schema: "catalog",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -127,77 +158,39 @@ namespace Trecom.Api.Services.Catalog.Migrations
                     table.ForeignKey(
                         name: "FK_SpecificCategories_TypeCategories_TypeCategoryId",
                         column: x => x.TypeCategoryId,
+                        principalSchema: "catalog",
                         principalTable: "TypeCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NAME = table.Column<string>(type: "varchar(50)", nullable: false),
-                    DESCRIPTION = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PICURL = table.Column<string>(type: "nvarchar(100)", nullable: true),
-                    UnitPrice = table.Column<decimal>(type: "decimal(15,2)", precision: 15, scale: 2, nullable: false),
-                    BodyType = table.Column<int>(type: "int", nullable: true),
-                    Gender = table.Column<int>(type: "int", nullable: true),
-                    Color = table.Column<int>(type: "int", nullable: true),
-                    SpecificCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SupplierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BrandId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    ModifyDate = table.Column<DateTime>(type: "datetime", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Products_Brands_BrandId",
-                        column: x => x.BrandId,
-                        principalTable: "Brands",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Products_SpecificCategories_SpecificCategoryId",
-                        column: x => x.SpecificCategoryId,
-                        principalTable: "SpecificCategories",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Products_Suppliers_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "Suppliers",
-                        principalColumn: "Id");
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_BrandSupplier_SuppliersId",
-                table: "BrandSupplier",
-                column: "SuppliersId");
+                name: "IX_Products_BaseCategoryId",
+                schema: "catalog",
+                table: "Products",
+                column: "BaseCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_BrandId",
+                schema: "catalog",
                 table: "Products",
                 column: "BrandId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_SpecificCategoryId",
-                table: "Products",
-                column: "SpecificCategoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_SupplierId",
+                schema: "catalog",
                 table: "Products",
                 column: "SupplierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SpecificCategories_TypeCategoryId",
+                schema: "catalog",
                 table: "SpecificCategories",
                 column: "TypeCategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TypeCategories_BaseCategoryId",
+                schema: "catalog",
                 table: "TypeCategories",
                 column: "BaseCategoryId");
         }
@@ -205,25 +198,28 @@ namespace Trecom.Api.Services.Catalog.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BrandSupplier");
+                name: "Products",
+                schema: "catalog");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "SpecificCategories",
+                schema: "catalog");
 
             migrationBuilder.DropTable(
-                name: "Brands");
+                name: "Brands",
+                schema: "catalog");
 
             migrationBuilder.DropTable(
-                name: "SpecificCategories");
+                name: "Suppliers",
+                schema: "catalog");
 
             migrationBuilder.DropTable(
-                name: "Suppliers");
+                name: "TypeCategories",
+                schema: "catalog");
 
             migrationBuilder.DropTable(
-                name: "TypeCategories");
-
-            migrationBuilder.DropTable(
-                name: "BaseCategories");
+                name: "BaseCategories",
+                schema: "catalog");
         }
     }
 }

@@ -12,32 +12,18 @@ using Trecom.Api.Services.Catalog.Persistance.EntityFramework;
 namespace Trecom.Api.Services.Catalog.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230728151854_Init")]
+    [Migration("20231126110852_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("catalog")
                 .HasAnnotation("ProductVersion", "6.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("BrandSupplier", b =>
-                {
-                    b.Property<Guid>("BrandsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SuppliersId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("BrandsId", "SuppliersId");
-
-                    b.HasIndex("SuppliersId");
-
-                    b.ToTable("BrandSupplier", (string)null);
-                });
 
             modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.BaseCategory", b =>
                 {
@@ -71,7 +57,7 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BaseCategories");
+                    b.ToTable("BaseCategories", "catalog");
                 });
 
             modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.Brand", b =>
@@ -100,13 +86,16 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", "catalog");
                 });
 
             modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BaseCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("BodyType")
@@ -136,15 +125,12 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("varchar(50)")
+                        .HasColumnType("nvarchar(100)")
                         .HasColumnName("NAME");
 
                     b.Property<string>("PictureUrl")
                         .HasColumnType("nvarchar(100)")
                         .HasColumnName("PICURL");
-
-                    b.Property<Guid>("SpecificCategoryId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("SupplierId")
                         .HasColumnType("uniqueidentifier");
@@ -160,13 +146,13 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
+                    b.HasIndex("BaseCategoryId");
 
-                    b.HasIndex("SpecificCategoryId");
+                    b.HasIndex("BrandId");
 
                     b.HasIndex("SupplierId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", "catalog");
                 });
 
             modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.SpecificCategory", b =>
@@ -203,7 +189,7 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
                     b.HasIndex("TypeCategoryId");
 
-                    b.ToTable("SpecificCategories");
+                    b.ToTable("SpecificCategories", "catalog");
                 });
 
             modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.Supplier", b =>
@@ -238,7 +224,7 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Suppliers");
+                    b.ToTable("Suppliers", "catalog");
                 });
 
             modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.TypeCategory", b =>
@@ -278,41 +264,32 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
                     b.HasIndex("BaseCategoryId");
 
-                    b.ToTable("TypeCategories");
-                });
-
-            modelBuilder.Entity("BrandSupplier", b =>
-                {
-                    b.HasOne("Trecom.Api.Services.Catalog.Models.Entities.Brand", null)
-                        .WithMany()
-                        .HasForeignKey("BrandsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Trecom.Api.Services.Catalog.Models.Entities.Supplier", null)
-                        .WithMany()
-                        .HasForeignKey("SuppliersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.ToTable("TypeCategories", "catalog");
                 });
 
             modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.Product", b =>
                 {
-                    b.HasOne("Trecom.Api.Services.Catalog.Models.Entities.Brand", "Brand")
-                        .WithMany("Products")
-                        .HasForeignKey("BrandId");
+                    b.HasOne("Trecom.Api.Services.Catalog.Models.Entities.BaseCategory", "BaseCategory")
+                        .WithMany()
+                        .HasForeignKey("BaseCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Trecom.Api.Services.Catalog.Models.Entities.SpecificCategory", "SpecificCategory")
-                        .WithMany("Products")
-                        .HasForeignKey("SpecificCategoryId");
+                    b.HasOne("Trecom.Api.Services.Catalog.Models.Entities.Brand", "Brand")
+                        .WithMany()
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Trecom.Api.Services.Catalog.Models.Entities.Supplier", "Supplier")
-                        .WithMany("Products")
-                        .HasForeignKey("SupplierId");
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BaseCategory");
 
                     b.Navigation("Brand");
-
-                    b.Navigation("SpecificCategory");
 
                     b.Navigation("Supplier");
                 });
@@ -320,7 +297,7 @@ namespace Trecom.Api.Services.Catalog.Migrations
             modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.SpecificCategory", b =>
                 {
                     b.HasOne("Trecom.Api.Services.Catalog.Models.Entities.TypeCategory", "TypeCategory")
-                        .WithMany("SpecificCategories")
+                        .WithMany()
                         .HasForeignKey("TypeCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -349,7 +326,7 @@ namespace Trecom.Api.Services.Catalog.Migrations
 
                             b1.HasKey("SupplierId");
 
-                            b1.ToTable("Suppliers");
+                            b1.ToTable("Suppliers", "catalog");
 
                             b1.WithOwner()
                                 .HasForeignKey("SupplierId");
@@ -362,37 +339,12 @@ namespace Trecom.Api.Services.Catalog.Migrations
             modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.TypeCategory", b =>
                 {
                     b.HasOne("Trecom.Api.Services.Catalog.Models.Entities.BaseCategory", "BaseCategory")
-                        .WithMany("TypeCategories")
+                        .WithMany()
                         .HasForeignKey("BaseCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("BaseCategory");
-                });
-
-            modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.BaseCategory", b =>
-                {
-                    b.Navigation("TypeCategories");
-                });
-
-            modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.Brand", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.SpecificCategory", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.Supplier", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("Trecom.Api.Services.Catalog.Models.Entities.TypeCategory", b =>
-                {
-                    b.Navigation("SpecificCategories");
                 });
 #pragma warning restore 612, 618
         }

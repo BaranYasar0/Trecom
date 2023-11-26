@@ -9,6 +9,7 @@ using Trecom.Api.Services.Catalog.Constants;
 using Trecom.Api.Services.Catalog.Extensions;
 using Trecom.Api.Services.Catalog.Models.Dtos;
 using Trecom.Api.Services.Catalog.Models.Entities;
+using Trecom.Api.Services.Catalog.Models.Enums;
 using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Persistance.Repository;
@@ -135,24 +136,41 @@ public class ProductRepository
         return mapper.Map<ProductResponseDto>(product);
     }
 
-    public async Task<PaginationViewModel<ProductResponseDto>> GetProductListByQueryParameters()
-    {
-        var response = await client.SearchAsync<Product>(s => s.Index(IndexSettings.ProductIndexName)
-            .Query(q =>
-                q.Bool(b =>
-                    b.Must(m =>
-                        m.Match(ma =>
-                            ma.Field(f =>
-                                f.CategoryId).Query("7097c12c-f274-4b75-84ea-ddfa45a80fb3"))))
-            ));
+    //public async Task<PaginationViewModel<ProductResponseDto>> GetProductListByQueryParameters(QuerySortCriteriasDto sortCriterias,QuerySearchCriteriasDto searchCriterias,QueryPaginationDto pagination)
+    //{
+    //    var response = await client.SearchAsync<Product>(s => s.Index(IndexSettings.ProductIndexName)
+    //        .ConfigurePaginationParameters(pagination)
+    //        .Query(q =>
+    //            q.Bool(b => b
+                   
+    //        )));
 
-        if (!response.IsValidResponse)
-            return PaginationViewModel<ProductResponseDto>.Create(new List<ProductResponseDto>(), response.Documents.Count);
+    //    if (!response.IsValidResponse)
+    //        return PaginationViewModel<ProductResponseDto>.Create(new List<ProductResponseDto>(), response.Documents.Count);
 
-        var productList = response.Documents.NullBusinessValidation()? await response.GetDocumentsWithMatchedId() : new List<Product>();
+    //    var productList = response.Documents.NullBusinessValidation()? await response.GetDocumentsWithMatchedId() : new List<Product>();
 
-        return PaginationViewModel<ProductResponseDto>.Create(
-            mapper.Map<List<ProductResponseDto>>(productList)
-            , response.Documents.Count);
-    }
+    //    return PaginationViewModel<ProductResponseDto>.Create(
+    //        mapper.Map<List<ProductResponseDto>>(productList)
+    //        , response.Documents.Count);
+    //}
+
+    //private Action<SortOptionsDescriptor<Product>> GetSortCriteria(QuerySortCriteriasDto sortCriterias)
+    //{
+
+
+    //    sortCriterias.SortBy switch
+    //    {
+    //        SortCriteria.LowestPrice => (q) => q.Field(f => f.Price).Ascending(),
+    //        SortCriteria.HighestPrice => (q) => q.Field(f => f.Price).Descending(),
+    //        SortCriteria.Newest => (q) => q.Field(f => f.CreatedDate).Descending(),
+    //        SortCriteria.TopSelling => (q) => q.Field(f => f.SalesCount).Descending(),
+    //        SortCriteria.TopRated => (q) => q.Field(f => f.Rating).Descending(),
+    //        SortCriteria.MostReviewed => (q) => q.Field(f => f.ReviewsCount).Descending(),
+    //        _ => (q) => q.Field(f => f.CreatedDate).Descending()
+    //    };
+    //    Action<SortOptionsDescriptor<Product>> sortCriteria = (q) => q.Field(f=>f)
+
+
+    //}
 }

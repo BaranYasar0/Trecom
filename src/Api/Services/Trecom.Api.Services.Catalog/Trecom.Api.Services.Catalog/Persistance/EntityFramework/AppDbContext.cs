@@ -10,6 +10,8 @@ namespace Trecom.Api.Services.Catalog.Persistance.EntityFramework;
 
 public class AppDbContext : DbContext
 {
+    public const string DEFAULT_SCHEMA = "catalog";
+    
     public AppDbContext(DbContextOptions options) : base(options)
     {
     }
@@ -23,6 +25,7 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasDefaultSchema(DEFAULT_SCHEMA);
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new ProductEntityConfiguration());
@@ -32,7 +35,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new SupplierEntityConfiguration());
         modelBuilder.ApplyConfiguration(new TypeCategoryEntityConfiguration());
 
-        SeedCatalogItems.SeedItemsToDb(modelBuilder);
+        //SeedCatalogItems.SeedItemsToDb(modelBuilder);
     }
 
 

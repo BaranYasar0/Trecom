@@ -1,4 +1,6 @@
-﻿namespace Trecom.Shared.Models;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Trecom.Shared.Models;
 
 public class PaginationViewModel<TEntity> where TEntity : class
 {
@@ -41,5 +43,18 @@ public class PaginationViewModel<TEntity> where TEntity : class
     public static PaginationViewModel<TEntity> Create(List<TEntity> data, int count, int pageSize = 10, int page = 1)
     {
         return new PaginationViewModel<TEntity>(data, count, pageSize, page);
+    }
+
+    public async Task<PaginationViewModel<TEntity>> PaginableListAsync(IQueryable<TEntity> items, int size, int index, CancellationToken cancellationToken = default)
+    {
+        PaginationViewModel<TEntity> page = new()
+        {
+            PageSize = size,
+            Page = index,
+            Count = await items.CountAsync(cancellationToken),
+            Items = await items.Skip(size * index).Take(size).ToListAsync(cancellationToken)
+        };
+
+        return page;
     }
 }

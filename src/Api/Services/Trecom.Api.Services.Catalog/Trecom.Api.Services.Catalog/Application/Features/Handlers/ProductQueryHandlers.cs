@@ -66,10 +66,14 @@ public class ProductQueryHandlers:
         return paginableProductList;
     }
 
+    //public async Task<PaginationViewModel<ProductResponseDto>> Handle(GetProductListByQueryParameters request, CancellationToken cancellationToken)
+    //{
+    //    var productList = await productRepository.GetProductListByQueryParameters();
+
+    //    return productList;
+    //}
     public async Task<PaginationViewModel<ProductResponseDto>> Handle(GetProductListByQueryParameters request, CancellationToken cancellationToken)
     {
-        var productList = await productRepository.GetProductListByQueryParameters();
-
-        return productList;
+        throw new NotImplementedException();
     }
 }

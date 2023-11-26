@@ -11,30 +11,30 @@ public class Product : BaseEntity
     public string Name { get; set; }
     public string? Description { get; set; }
         
-    [JsonPropertyName("picture_url")]
+    //[JsonPropertyName("picture_url")]
     public string? PictureUrl { get; set; }
         
-    [JsonPropertyName("unit_price")]
+    //[JsonPropertyName("unit_price")]
     public decimal UnitPrice { get; set; }
 
     //ENUMS
-    [JsonPropertyName("body_type")]
+    //[JsonPropertyName("body_type")]
     public BodyType? BodyType { get; set; }
     public Gender? Gender { get; set; }
-    [JsonPropertyName("color_type")]
+    //[JsonPropertyName("color_type")]
     public ColorType? Color { get; set; }
 
     //RELATIONS
-    [JsonPropertyName("category_id")]
-    public Guid CategoryId { get; set; }
-    [JsonPropertyName("supplier_id")]
+    //[JsonPropertyName("category_id")]
+    public Guid BaseCategoryId { get; set; }
+    //[JsonPropertyName("supplier_id")]
     public Guid SupplierId { get; set; }
-    [JsonPropertyName("brand_id")]
+    //[JsonPropertyName("brand_id")]
     public Guid BrandId { get; set; }
 
     public Supplier Supplier { get; set; }
     public Brand Brand { get; set; }
-    public Category Category { get; set; }
+    public BaseCategory BaseCategory { get; set; }
 
     public Product()
     {

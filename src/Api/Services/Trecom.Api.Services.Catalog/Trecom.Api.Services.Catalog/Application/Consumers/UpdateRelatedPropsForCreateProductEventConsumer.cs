@@ -60,7 +60,7 @@ public class UpdateRelatedPropsForCreateProductEventConsumer : IConsumer<UpdateR
             Product? toBeUpdatedProduct = productResponse.Source;
             toBeUpdatedProduct.Brand = toBeAddedBrand;
             toBeUpdatedProduct.Supplier = toBeAddedSupplier;
-            toBeUpdatedProduct.Category = toBeAddedCategory;
+            //toBeUpdatedProduct.Category = toBeAddedCategory;
 
             try
             {

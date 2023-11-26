@@ -48,7 +48,7 @@ public class ProductCommandHandlers :
                 await sendEndpointProvider.GetSendEndpoint(
                     new Uri($"queue:{RabbitMqSettings.UpdateBrandAndSupplierForCreateProductEvent}"));
 
-            await endpoint.Send(new UpdateRelatedPropsForCreateProductEvent(toBeCreatedProduct.BrandId, toBeCreatedProduct.SupplierId, toBeCreatedProduct.Id.ToString(),toBeCreatedProduct.CategoryId));
+            await endpoint.Send(new UpdateRelatedPropsForCreateProductEvent(toBeCreatedProduct.BrandId, toBeCreatedProduct.SupplierId, toBeCreatedProduct.Id.ToString(),Guid.NewGuid()));
 
         }
         catch (Exception e)
