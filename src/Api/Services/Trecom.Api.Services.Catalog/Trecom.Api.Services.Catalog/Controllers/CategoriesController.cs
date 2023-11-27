@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Trecom.Api.Services.Catalog.Application.Features.Queries;
 using Trecom.Api.Services.Catalog.Models.Dtos;
 using Trecom.Api.Services.Catalog.Models.Entities;
-using Trecom.Api.Services.Catalog.Persistance.Repository;
+using Trecom.Api.Services.Catalog.Persistance.Elasticsearch.Repository;
 
 namespace Trecom.Api.Services.Catalog.Controllers;
 
@@ -11,9 +11,9 @@ namespace Trecom.Api.Services.Catalog.Controllers;
 [ApiController]
 public class CategoriesController : BaseController
 {
-    private readonly CategoryRepository categoryRepository;
+    private readonly CategoryElasticRepository categoryRepository;
     private readonly IMapper mapper;
-    public CategoriesController(CategoryRepository categoryRepository, IMapper mapper)
+    public CategoriesController(CategoryElasticRepository categoryRepository, IMapper mapper)
     {
         this.categoryRepository = categoryRepository;
         this.mapper = mapper;

@@ -12,18 +12,18 @@ using Trecom.Api.Services.Catalog.Models.Entities;
 using Trecom.Api.Services.Catalog.Models.Enums;
 using Trecom.Shared.Models;
 
-namespace Trecom.Api.Services.Catalog.Persistance.Repository;
+namespace Trecom.Api.Services.Catalog.Persistance.Elasticsearch.Repository;
 
-public class ProductRepository
+public class ProductElasticRepository
 {
     private readonly ElasticsearchClient client;
     private ElasticIndexSettings IndexSettings;
     private readonly IMapper mapper;
-    public ProductRepository(ElasticsearchClient elasticClient, IOptions<ElasticIndexSettings> indexName, IMapper mapper)
+    public ProductElasticRepository(ElasticsearchClient elasticClient, IOptions<ElasticIndexSettings> indexName, IMapper mapper)
     {
-        this.client = elasticClient;
+        client = elasticClient;
         this.mapper = mapper;
-        this.IndexSettings = indexName.Value;
+        IndexSettings = indexName.Value;
     }
 
     public async Task<PaginationViewModel<ProductResponseDto>> GetAllProductsAsync(QueryPaginationDto pagination)
@@ -124,7 +124,7 @@ public class ProductRepository
 
     public async Task<ProductResponseDto> CreateProductAsync(Product product)
     {
-        var result = await client.IndexAsync<Product>(product,
+        var result = await client.IndexAsync(product,
             x => x.
                 Index(IndexSettings.ProductIndexName).Id(product.Id));
 
@@ -142,7 +142,7 @@ public class ProductRepository
     //        .ConfigurePaginationParameters(pagination)
     //        .Query(q =>
     //            q.Bool(b => b
-                   
+
     //        )));
 
     //    if (!response.IsValidResponse)

@@ -1,21 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Trecom.Api.Services.MailService.Models
+namespace Trecom.Api.Services.MailService.Models;
+
+public class MailDbContext : DbContext
 {
-    public class MailDbContext : DbContext
+    public MailDbContext(DbContextOptions options) : base(options)
     {
-        public MailDbContext(DbContextOptions options) : base(options)
-        {
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.HasDefaultSchema("MAILING_SCHEMA");
-            base.OnModelCreating(modelBuilder);
-        }
-
-        public DbSet<Mail> Mails { get; set; }
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.HasDefaultSchema("MAILING_SCHEMA");
+        base.OnModelCreating(modelBuilder);
+    }
+
+    public DbSet<Mail> Mails { get; set; }
 }
 
 

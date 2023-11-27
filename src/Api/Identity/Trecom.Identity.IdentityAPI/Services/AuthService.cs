@@ -4,7 +4,7 @@ using Trecom.Api.Identity.Application.Models.Entities;
 using Trecom.Api.Identity.EntityFramework;
 using Trecom.Api.Identity.Services.Interfaces;
 
-namespace Watchflix.Api.Identity.Services;
+namespace Trecom.Api.Identity.Services;
 
 public class AuthService:IAuthService
 {

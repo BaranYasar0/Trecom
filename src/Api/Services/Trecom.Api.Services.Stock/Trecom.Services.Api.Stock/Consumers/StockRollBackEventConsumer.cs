@@ -1,8 +1,8 @@
 ﻿using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Trecom.Api.Services.Catalog.Extensions;
 using Trecom.Services.Api.Stock.Models;
 using Trecom.Shared.Events.Interfaces;
+using Trecom.Shared.Extensions;
 
 namespace Trecom.Services.Api.Stock.Consumers;
 

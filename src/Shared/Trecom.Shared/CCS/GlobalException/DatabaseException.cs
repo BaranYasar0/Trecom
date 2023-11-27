@@ -1,6 +1,4 @@
-﻿using Trecom.Shared.CCS.GlobalException;
-
-namespace Trecom.Api.Services.Catalog.Persistance.Repository;
+﻿namespace Trecom.Shared.CCS.GlobalException;
 
 public class DatabaseException : BusinessException
 {

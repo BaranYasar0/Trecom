@@ -1,6 +1,6 @@
 ﻿using Trecom.Shared.Models;
 
-namespace Trecom.Api.Services.Order.Application.Services.Repositories.BaseInterfaces;
+namespace Trecom.Shared.Services.Repository.BaseInterfaces;
 
 public interface ISyncRepository<TEntity> where TEntity : BaseEntity
 {

@@ -6,8 +6,8 @@ using StackExchange.Redis;
 using Trecom.Api.Services.BasketService.Models;
 using Trecom.Api.Services.BasketService.Persistance.Interfaces;
 using Trecom.Api.Services.BasketService.Services;
-using Trecom.Api.Services.Catalog.Extensions;
 using Trecom.Shared.CCS.GlobalException;
+using Trecom.Shared.Extensions;
 using Trecom.Shared.Services.Interfaces;
 
 namespace Trecom.Api.Services.BasketService.Persistance;

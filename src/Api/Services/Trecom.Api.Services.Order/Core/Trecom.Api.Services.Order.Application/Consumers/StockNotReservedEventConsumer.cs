@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using MassTransit;
 using Microsoft.Extensions.Logging;
-using Trecom.Api.Services.Catalog.Extensions;
 using Trecom.Api.Services.Order.Application.Services.Repositories;
 using Trecom.Api.Services.Order.Domain.Enums;
 using Trecom.Shared.Events.Interfaces;
+using Trecom.Shared.Extensions;
 
 namespace Trecom.Api.Services.Order.Application.Consumers;
 

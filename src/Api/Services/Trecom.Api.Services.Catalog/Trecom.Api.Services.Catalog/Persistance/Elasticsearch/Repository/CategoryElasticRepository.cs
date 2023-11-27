@@ -8,15 +8,15 @@ using Trecom.Api.Services.Catalog.Models.Entities;
 using Trecom.Shared.CCS.GlobalException;
 using Trecom.Shared.Models;
 
-namespace Trecom.Api.Services.Catalog.Persistance.Repository;
+namespace Trecom.Api.Services.Catalog.Persistance.Elasticsearch.Repository;
 
-public class CategoryRepository
+public class CategoryElasticRepository
 {
     private readonly ElasticsearchClient client;
     private readonly ElasticIndexSettings indexSettings;
     private readonly IMapper mapper;
 
-    public CategoryRepository(ElasticsearchClient client, IOptions<ElasticIndexSettings> indexSettings, IMapper mapper)
+    public CategoryElasticRepository(ElasticsearchClient client, IOptions<ElasticIndexSettings> indexSettings, IMapper mapper)
     {
         this.client = client;
         this.mapper = mapper;

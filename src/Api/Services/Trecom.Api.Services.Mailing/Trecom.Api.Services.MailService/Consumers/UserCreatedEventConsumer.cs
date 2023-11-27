@@ -1,7 +1,7 @@
 ﻿using MassTransit;
-using Trecom.Api.Identity.Application.Events;
 using Trecom.Api.Services.MailService.Constants;
 using Trecom.Api.Services.MailService.Services;
+using Trecom.Shared.Events;
 
 namespace Trecom.Api.Services.MailService.Consumers;
 

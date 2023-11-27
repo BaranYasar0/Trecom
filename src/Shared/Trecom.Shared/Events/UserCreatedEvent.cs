@@ -1,4 +1,4 @@
-﻿namespace Trecom.Api.Identity.Application.Events;
+﻿namespace Trecom.Shared.Events;
 
 public class UserCreatedEvent
 {

@@ -2,7 +2,7 @@
 using MediatR;
 using Trecom.Api.Services.Catalog.Application.Features.Queries;
 using Trecom.Api.Services.Catalog.Models.Dtos;
-using Trecom.Api.Services.Catalog.Persistance.Repository;
+using Trecom.Api.Services.Catalog.Persistance.Elasticsearch.Repository;
 using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Application.Features.Handlers;
@@ -14,9 +14,9 @@ public class CategoryQueryHandlers :
 {
     private readonly IMapper mapper;
     private readonly ILogger<CategoryQueryHandlers> logger;
-    private readonly ProductRepository productRepository;
-    private readonly CategoryRepository categoryRepository;
-    public CategoryQueryHandlers(IMapper mapper, ILogger<CategoryQueryHandlers> logger, ProductRepository productRepository, CategoryRepository categoryRepository)
+    private readonly ProductElasticRepository productRepository;
+    private readonly CategoryElasticRepository categoryRepository;
+    public CategoryQueryHandlers(IMapper mapper, ILogger<CategoryQueryHandlers> logger, ProductElasticRepository productRepository, CategoryElasticRepository categoryRepository)
     {
         this.mapper = mapper;
         this.logger = logger;

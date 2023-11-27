@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Trecom.Api.Identity.Application.Features.Rules;
 using Trecom.Api.Identity.Application.Helpers.JWT;
 using Trecom.Api.Identity.EntityFramework;
+using Trecom.Api.Identity.Services;
 using Trecom.Api.Identity.Services.Interfaces;
-using Watchflix.Api.Identity.Services;
 
-namespace Watchflix.Api.Identity.Extensions;
+namespace Trecom.Api.Identity.Extensions;
 
 public static class IdentityServicesRegistration
 {

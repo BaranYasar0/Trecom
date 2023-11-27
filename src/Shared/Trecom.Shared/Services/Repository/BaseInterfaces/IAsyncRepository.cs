@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Query;
 using Trecom.Shared.Models;
 
-namespace Trecom.Shared.Services.Repositories.BaseInterfaces;
+namespace Trecom.Shared.Services.Repository.BaseInterfaces;
 
-public interface IAsyncRepository<TEntity> where TEntity : BaseEntity
+public interface IAsyncRepository<TEntity> where TEntity : BaseEntity 
 {
     Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, CancellationToken cancellationToken = default);

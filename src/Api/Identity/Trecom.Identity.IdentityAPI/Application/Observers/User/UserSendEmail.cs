@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using MassTransit;
-using Trecom.Api.Identity.Application.Events;
 using Trecom.Shared;
+using Trecom.Shared.Events;
 
 namespace Trecom.Api.Identity.Application.Observers.User;
 

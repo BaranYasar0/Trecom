@@ -3,13 +3,13 @@ using Microsoft.Extensions.Options;
 using Trecom.Api.Services.Catalog.Constants;
 using Trecom.Api.Services.Catalog.Models.Entities;
 
-namespace Trecom.Api.Services.Catalog.Persistance.Repository;
+namespace Trecom.Api.Services.Catalog.Persistance.Elasticsearch.Repository;
 
-public class BrandRepository
+public class BrandElasticRepository
 {
     private readonly ElasticsearchClient client;
     private readonly ElasticIndexSettings elasticIndexSettings;
-    public BrandRepository(ElasticsearchClient client, IOptions<ElasticIndexSettings> elasticIndexSettings)
+    public BrandElasticRepository(ElasticsearchClient client, IOptions<ElasticIndexSettings> elasticIndexSettings)
     {
         this.client = client;
         this.elasticIndexSettings = elasticIndexSettings.Value;
@@ -19,7 +19,7 @@ public class BrandRepository
     {
         try
         {
-            var response = await client.IndexAsync<Brand>(brand, elasticIndexSettings.BrandIndexName);
+            var response = await client.IndexAsync(brand, elasticIndexSettings.BrandIndexName);
             return brand;
         }
         catch (Exception e)
@@ -33,7 +33,7 @@ public class BrandRepository
     {
         try
         {
-            var response = await client.IndexAsync<Supplier>(supplier, elasticIndexSettings.SupplierIndexName);
+            var response = await client.IndexAsync(supplier, elasticIndexSettings.SupplierIndexName);
             return supplier;
         }
         catch (Exception e)

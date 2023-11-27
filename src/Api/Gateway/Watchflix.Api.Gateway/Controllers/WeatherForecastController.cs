@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Trecom.Api.Gateway.Controllers;
+namespace Watchflix.Api.Gateway.Controllers;
 
 [ApiController]
 [Route("[controller]")]

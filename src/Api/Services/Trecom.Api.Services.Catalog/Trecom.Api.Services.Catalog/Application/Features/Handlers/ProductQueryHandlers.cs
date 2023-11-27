@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Caching.Distributed;
 using Trecom.Api.Services.Catalog.Application.Features.Queries;
 using Trecom.Api.Services.Catalog.Models.Dtos;
-using Trecom.Api.Services.Catalog.Persistance.Repository;
+using Trecom.Api.Services.Catalog.Persistance.Elasticsearch.Repository;
 using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Application.Features.Handlers;
@@ -17,9 +17,9 @@ public class ProductQueryHandlers:
     IRequestHandler<GetProductListByQueryParameters,PaginationViewModel<ProductResponseDto>>
 
 {
-    private readonly ProductRepository productRepository;
+    private readonly ProductElasticRepository productRepository;
     private readonly IDistributedCache distributedCache;
-    public ProductQueryHandlers(ProductRepository productRepository, IDistributedCache distributedCache)
+    public ProductQueryHandlers(ProductElasticRepository productRepository, IDistributedCache distributedCache)
     {
         this.productRepository = productRepository;
         this.distributedCache = distributedCache;

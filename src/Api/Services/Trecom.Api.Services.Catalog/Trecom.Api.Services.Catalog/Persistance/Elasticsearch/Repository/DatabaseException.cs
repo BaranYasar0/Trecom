@@ -1,6 +1,6 @@
 ﻿using Trecom.Shared.CCS.GlobalException;
 
-namespace Trecom.Api.Services.Catalog.Persistance.Repository;
+namespace Trecom.Api.Services.Catalog.Persistance.Elasticsearch.Repository;
 
 public class DatabaseException : BusinessException
 {

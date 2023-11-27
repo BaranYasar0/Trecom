@@ -1,9 +1,9 @@
 ﻿using MassTransit;
 using Trecom.Api.Services.BasketService.Models;
 using Trecom.Api.Services.BasketService.Persistance.Interfaces;
-using Trecom.Api.Services.Catalog.Extensions;
 using Trecom.Shared.Events;
 using Trecom.Shared.Events.Interfaces;
+using Trecom.Shared.Extensions;
 
 namespace Trecom.Api.Services.BasketService.Services;
 

@@ -11,9 +11,9 @@ using Trecom.Api.Identity.Application.Helpers.JWT;
 using Trecom.Api.Identity.Application.Observers;
 using Trecom.Api.Identity.Application.Observers.User;
 using Trecom.Api.Identity.EntityFramework;
+using Trecom.Api.Identity.Services;
 using Trecom.Api.Identity.Services.Interfaces;
 using Trecom.Shared.Extensions;
-using Watchflix.Api.Identity.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

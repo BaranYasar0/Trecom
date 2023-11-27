@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using Trecom.Shared.CCS.GlobalException;
 
-namespace Trecom.Api.Services.Catalog.Extensions;
+namespace Trecom.Shared.Extensions;
 
 public static class ObjectNullCheckExtension
 {

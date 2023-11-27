@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
-using Trecom.Api.Services.Order.Application.Services.Repositories.BaseInterfaces;
-using Trecom.Api.Services.Order.Application.Services.Repositories.Paginate;
-using Trecom.Api.Services.Order.Persistance.Contexts;
 using Trecom.Shared.Models;
-using Trecom.Shared.Services.Repositories.BaseInterfaces;
+using Trecom.Shared.Services.Repository.BaseInterfaces;
 
-namespace Trecom.Api.Services.Order.Persistance.Repositories;
+namespace Trecom.Shared.Services.Repository;
 
-public class BaseRepository<T> : IAsyncRepository<T>,ISyncRepository<T> where T : BaseEntity
+public class BaseRepository<T,TContext> : IAsyncRepository<T>,ISyncRepository<T> where T : BaseEntity where TContext : DbContext
 {
-    protected OrderDbContext _dbContext;
+    protected TContext _dbContext;
 
-    public BaseRepository(OrderDbContext dbContext)
+    public BaseRepository(TContext dbContext)
     {
         _dbContext = dbContext;
     }

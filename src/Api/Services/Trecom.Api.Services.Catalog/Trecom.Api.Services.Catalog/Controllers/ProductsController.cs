@@ -9,7 +9,6 @@ using Trecom.Api.Services.Catalog.Application.Features.Queries;
 using Trecom.Api.Services.Catalog.Models.Dtos;
 using Trecom.Api.Services.Catalog.Models.Entities;
 using Trecom.Api.Services.Catalog.Persistance.EntityFramework;
-using Trecom.Api.Services.Catalog.Persistance.Repository;
 using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Controllers;

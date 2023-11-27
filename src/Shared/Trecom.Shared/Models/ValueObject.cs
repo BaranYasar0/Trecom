@@ -1,4 +1,4 @@
-﻿namespace Trecom.Api.Services.Order.Domain.Entities;
+﻿namespace Trecom.Shared.Models;
 
 public class ValueObject
 {
