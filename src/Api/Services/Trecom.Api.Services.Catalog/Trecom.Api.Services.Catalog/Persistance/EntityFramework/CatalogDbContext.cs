@@ -8,13 +8,17 @@ using Trecom.Shared.Models;
 
 namespace Trecom.Api.Services.Catalog.Persistance.EntityFramework;
 
-public class AppDbContext : DbContext
+public class CatalogDbContext : DbContext
 {
-    public const string DEFAULT_SCHEMA = "catalog";
-    
-    public AppDbContext(DbContextOptions options) : base(options)
+    protected CatalogDbContext()
     {
     }
+
+    public CatalogDbContext(DbContextOptions<CatalogDbContext> options) : base(options)
+    {
+    }
+
+    public const string DEFAULT_SCHEMA = "cat";
 
     public DbSet<Product> Products { get; set; }
     public DbSet<BaseCategory> BaseCategories { get; set; }
@@ -26,7 +30,6 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.HasDefaultSchema(DEFAULT_SCHEMA);
-        base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new ProductEntityConfiguration());
         modelBuilder.ApplyConfiguration(new BaseCategoryEntityConfiguration());
@@ -34,6 +37,7 @@ public class AppDbContext : DbContext
         modelBuilder.ApplyConfiguration(new SpecificCategoryEntityConfiguration());
         modelBuilder.ApplyConfiguration(new SupplierEntityConfiguration());
         modelBuilder.ApplyConfiguration(new TypeCategoryEntityConfiguration());
+        base.OnModelCreating(modelBuilder);
 
         //SeedCatalogItems.SeedItemsToDb(modelBuilder);
     }

@@ -11,7 +11,7 @@ using Trecom.Api.Services.Catalog.Persistance.EntityFramework;
 
 namespace Trecom.Api.Services.Catalog.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(CatalogDbContext))]
     [Migration("20231126110852_Init")]
     partial class Init
     {

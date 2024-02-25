@@ -12,6 +12,7 @@ public class PaginationViewModel<TEntity> where TEntity : class
         get;
         set;
     }
+
     public List<TEntity> Items { get; set; } = new();
 
     public PaginationViewModel()
@@ -45,16 +46,18 @@ public class PaginationViewModel<TEntity> where TEntity : class
         return new PaginationViewModel<TEntity>(data, count, pageSize, page);
     }
 
-    public async Task<PaginationViewModel<TEntity>> PaginableListAsync(IQueryable<TEntity> items, int size, int index, CancellationToken cancellationToken = default)
+    public Task<PaginationViewModel<TEntity>> PaginableListAsync(IEnumerable<TEntity> items,int count, int size, int index, CancellationToken cancellationToken = default)
     {
         PaginationViewModel<TEntity> page = new()
         {
             PageSize = size,
             Page = index,
-            Count = await items.CountAsync(cancellationToken),
-            Items = await items.Skip(size * index).Take(size).ToListAsync(cancellationToken)
+            Count = count,
+            Items = items.ToList()
         };
 
-        return page;
+        return Task.FromResult(page);
     }
+
+    
 }

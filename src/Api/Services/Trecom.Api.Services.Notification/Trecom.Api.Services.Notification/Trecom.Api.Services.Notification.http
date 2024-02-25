@@ -1,0 +1,6 @@
+@Trecom.Api.Services.Notification_HostAddress = http://localhost:5062
+
+GET {{Trecom.Api.Services.Notification_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

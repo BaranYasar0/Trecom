@@ -6,5 +6,5 @@ Stock => 5004
 Basket => 5005
 Payment => 5006
 Mailing => 5007
-
+Notification => 5008
 Client => 5010

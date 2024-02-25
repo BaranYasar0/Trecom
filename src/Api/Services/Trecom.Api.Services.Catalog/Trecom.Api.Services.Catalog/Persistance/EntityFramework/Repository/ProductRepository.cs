@@ -4,9 +4,9 @@ using Trecom.Shared.Services.Repository;
 
 namespace Trecom.Api.Services.Catalog.Persistance.EntityFramework.Repository
 {
-    public class ProductRepository:BaseRepository<Product,AppDbContext>,IProductRepository
+    public class ProductRepository:BaseRepository<Product,CatalogDbContext>,IProductRepository
     {
-        public ProductRepository(AppDbContext dbContext) : base(dbContext)
+        public ProductRepository(CatalogDbContext dbContext) : base(dbContext)
         {
         }
     }

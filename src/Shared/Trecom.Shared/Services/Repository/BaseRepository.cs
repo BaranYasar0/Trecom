@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Trecom.Shared.Models;
@@ -6,7 +7,7 @@ using Trecom.Shared.Services.Repository.BaseInterfaces;
 
 namespace Trecom.Shared.Services.Repository;
 
-public class BaseRepository<T,TContext> : IAsyncRepository<T>,ISyncRepository<T> where T : BaseEntity where TContext : DbContext
+public class BaseRepository<T,TContext> : IRepository<T> where T : BaseEntity where TContext : DbContext
 {
     protected TContext _dbContext;
 
@@ -27,27 +28,32 @@ public class BaseRepository<T,TContext> : IAsyncRepository<T>,ISyncRepository<T>
         return await query.FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public async Task<PaginationViewModel<T>> GetListAsync(int size=10,int index=0,Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+    public async Task<PaginationViewModel<T>> GetListAsync(int size=10,int page=1,Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
         CancellationToken cancellationToken = default)
     {
         IQueryable<T> query = dbset.AsQueryable();
 
-        if (predicate != null) query = query.Where(predicate);
         if (include != null) query = include(query);
+        if (predicate != null) query = query.Where(predicate);
         if(orderBy != null) query = orderBy(query);
-        return await new PaginationViewModel<T>().PaginableListAsync(query,size,index,cancellationToken);
+
+        int count = await query.CountAsync();
+        query = GetPaginableQuery(query, size, page - 1);
+        return await new PaginationViewModel<T>().PaginableListAsync(query, count, size, page, cancellationToken);
     }
 
-    public async Task<PaginationViewModel<T>> GetListAsNoTrackingAsync(int size = 10, int index = 0, Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
+    public async Task<PaginationViewModel<T>> GetListAsNoTrackingAsync(int size = 10, int page = 1, Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
         CancellationToken cancellationToken = default)
     {
         IQueryable<T> query = dbset.AsQueryable().AsNoTracking();
-
-        if (predicate != null) query = query.Where(predicate);
+        
         if (include != null) query = include(query);
+        if (predicate != null) query = query.Where(predicate);
         if (orderBy != null) query = orderBy(query);
 
-        return await new PaginationViewModel<T>().PaginableListAsync(query, size, index, cancellationToken);
+        int count= await query.CountAsync();
+        query = GetPaginableQuery(query,size,page-1);
+        return await new PaginationViewModel<T>().PaginableListAsync(query,count ,size, page, cancellationToken);
     }
 
     public async Task<T> AddAsync(T entity)
@@ -119,4 +125,8 @@ public class BaseRepository<T,TContext> : IAsyncRepository<T>,ISyncRepository<T>
         return 1;
     }
 
+    private IQueryable<T> GetPaginableQuery(IQueryable<T> query,int size,int page)
+    {
+        return query.Skip(page).Take(size);
+    }
 }

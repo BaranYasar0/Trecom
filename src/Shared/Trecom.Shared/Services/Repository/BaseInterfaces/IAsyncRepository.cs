@@ -9,9 +9,9 @@ public interface IAsyncRepository<TEntity> where TEntity : BaseEntity
     Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, CancellationToken cancellationToken = default);
 
-    Task<PaginationViewModel<TEntity>> GetListAsync(int size = 10, int index = 0, Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, CancellationToken cancellationToken = default);
+    Task<PaginationViewModel<TEntity>> GetListAsync(int size = 10, int page = 1, Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, CancellationToken cancellationToken = default);
 
-    Task<PaginationViewModel<TEntity>> GetListAsNoTrackingAsync(int size = 10, int index = 0, Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, CancellationToken cancellationToken = default);
+    Task<PaginationViewModel<TEntity>> GetListAsNoTrackingAsync(int size = 10, int page = 1, Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, CancellationToken cancellationToken = default);
 
     Task<TEntity> AddAsync(TEntity entity);
     Task<int> AddRangeAsync(IEnumerable<TEntity> entities);

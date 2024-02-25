@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Trecom.Api.Identity.Application.Features.Profile;
 using Trecom.Api.Identity.Application.Features.Rules;
 using Trecom.Api.Identity.Application.Helpers.Encryption;
 using Trecom.Api.Identity.Application.Helpers.JWT;

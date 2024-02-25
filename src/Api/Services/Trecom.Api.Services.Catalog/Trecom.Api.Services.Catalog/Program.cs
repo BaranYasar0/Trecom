@@ -1,6 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Trecom.Api.Services.Catalog.Extensions;
 using Trecom.Api.Services.Catalog.Persistance.DataSeeding;
+using Trecom.Api.Services.Catalog.Persistance.EntityFramework;
 using Trecom.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +18,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDistributedMemoryCache();
+builder.Services.AddDbContext<CatalogDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon")));
 
 builder.Services.RegisterRequiredServices(builder.Configuration);
 

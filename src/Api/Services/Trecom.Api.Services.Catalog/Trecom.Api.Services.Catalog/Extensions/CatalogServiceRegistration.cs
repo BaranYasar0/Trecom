@@ -46,7 +46,6 @@ public static class CatalogServiceRegistration
         var client = new ElasticsearchClient(settings);
 
         services.AddSingleton(client);
-        services.AddDbContext<AppDbContext>(x => x.UseSqlServer(configuration.GetConnectionString("SqlCon")));
 
     }
 }

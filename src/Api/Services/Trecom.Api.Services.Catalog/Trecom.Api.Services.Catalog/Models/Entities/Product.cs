@@ -26,7 +26,7 @@ public class Product : BaseEntity
 
     //RELATIONS
     //[JsonPropertyName("category_id")]
-    public Guid BaseCategoryId { get; set; }
+    public Guid SpecificCategoryId { get; set; }
     //[JsonPropertyName("supplier_id")]
     public Guid SupplierId { get; set; }
     //[JsonPropertyName("brand_id")]
@@ -34,11 +34,11 @@ public class Product : BaseEntity
 
     public Supplier Supplier { get; set; }
     public Brand Brand { get; set; }
-    public BaseCategory BaseCategory { get; set; }
+    public SpecificCategory SpecificCategory { get; set; }
 
     public Product()
     {
-            
+
     }
 
     public Product(string name,Guid specificCategoryId,Guid supplierId,Guid brandId)

@@ -10,11 +10,11 @@ namespace Trecom.Shared.Models;
 public class BaseEntity
 {
     public virtual Guid Id { get; set; }
-    [JsonPropertyName("is_active")]
+    //[JsonPropertyName("is_active")]
     public bool IsActive { get; set; } = true;
-    [JsonPropertyName("created_date")]
+    //[JsonPropertyName("created_date")]
     public DateTime CreatedDate { get; set; }
-    [JsonPropertyName("update_date")]
+    //[JsonPropertyName("update_date")]
     public DateTime? UpdatedDate { get; set; }
 
     public BaseEntity()

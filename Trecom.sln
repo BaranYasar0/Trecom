@@ -67,7 +67,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trecom.Client.MvcClient", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trecom.Api.Services.Mailing", "Trecom.Api.Services.Mailing", "{D6CF11A3-11D0-44BD-8DCF-AFF75BB60D16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trecom.Api.Services.MailService", "src\Api\Services\Trecom.Api.Services.Mailing\Trecom.Api.Services.MailService\Trecom.Api.Services.MailService.csproj", "{1C53697F-8253-45A0-806B-3817FBF4DD53}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trecom.Api.Services.MailService", "src\Api\Services\Trecom.Api.Services.Mailing\Trecom.Api.Services.MailService\Trecom.Api.Services.MailService.csproj", "{1C53697F-8253-45A0-806B-3817FBF4DD53}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trecom.Api.Services.Notification", "Trecom.Api.Services.Notification", "{C38EC8D3-936F-42D9-AC59-63D4655208CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trecom.Api.Services.Notification", "src\Api\Services\Trecom.Api.Services.Notification\Trecom.Api.Services.Notification\Trecom.Api.Services.Notification.csproj", "{DD088BCD-F0B2-41AB-8722-63A591EAAC73}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,6 +139,10 @@ Global
 		{1C53697F-8253-45A0-806B-3817FBF4DD53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C53697F-8253-45A0-806B-3817FBF4DD53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C53697F-8253-45A0-806B-3817FBF4DD53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD088BCD-F0B2-41AB-8722-63A591EAAC73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD088BCD-F0B2-41AB-8722-63A591EAAC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD088BCD-F0B2-41AB-8722-63A591EAAC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD088BCD-F0B2-41AB-8722-63A591EAAC73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -171,6 +179,8 @@ Global
 		{005CC6AE-3FAF-4C74-A7BA-5969AF5DA17C} = {223FE99E-9C05-446A-B2A4-F6570D11D8B6}
 		{D6CF11A3-11D0-44BD-8DCF-AFF75BB60D16} = {40BBABFD-D36D-489C-96BD-D06B9212D8F5}
 		{1C53697F-8253-45A0-806B-3817FBF4DD53} = {D6CF11A3-11D0-44BD-8DCF-AFF75BB60D16}
+		{C38EC8D3-936F-42D9-AC59-63D4655208CE} = {40BBABFD-D36D-489C-96BD-D06B9212D8F5}
+		{DD088BCD-F0B2-41AB-8722-63A591EAAC73} = {C38EC8D3-936F-42D9-AC59-63D4655208CE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {608D91E8-E307-4EBB-B910-EB9E0EBE7873}
