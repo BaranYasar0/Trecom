@@ -1,5 +1,7 @@
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Trecom.Api.Services.Notification.Persistance;
+using Trecom.Shared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,15 @@ builder.Services.AddDbContext<NotificationDbContext>(x =>
 {
     x.UseSqlServer(builder.Configuration["SqlCon"]);
 });
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMqSettings:Url"]);
+    });
+});
+
+builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
 
 var app = builder.Build();
 

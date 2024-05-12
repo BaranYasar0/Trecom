@@ -14,7 +14,7 @@ public class CatalogDbContext : DbContext
     {
     }
 
-    public CatalogDbContext(DbContextOptions<CatalogDbContext> options) : base(options)
+    public CatalogDbContext(DbContextOptions options) : base(options)
     {
     }
 
@@ -43,7 +43,11 @@ public class CatalogDbContext : DbContext
     }
 
 
-
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlServer(@"Server=(localdb)\\MSSQLLocalDB;Database=Trecom;Trusted_Connection=True;");
+        base.OnConfiguring(optionsBuilder);
+    }
 
     public override int SaveChanges()
     {

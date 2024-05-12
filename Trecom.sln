@@ -71,7 +71,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trecom.Api.Services.MailSer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trecom.Api.Services.Notification", "Trecom.Api.Services.Notification", "{C38EC8D3-936F-42D9-AC59-63D4655208CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trecom.Api.Services.Notification", "src\Api\Services\Trecom.Api.Services.Notification\Trecom.Api.Services.Notification\Trecom.Api.Services.Notification.csproj", "{DD088BCD-F0B2-41AB-8722-63A591EAAC73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trecom.Api.Services.Notification", "src\Api\Services\Trecom.Api.Services.Notification\Trecom.Api.Services.Notification\Trecom.Api.Services.Notification.csproj", "{DD088BCD-F0B2-41AB-8722-63A591EAAC73}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServiceBus", "ServiceBus", "{35D3F7DF-ACCF-4C30-9FDE-9A5FC20C4FFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trecom.ServiceBus.Domain", "src\Api\ServiceBus\Trecom.ServiceBus.Domain\Trecom.ServiceBus.Domain.csproj", "{F570EF85-DE34-4680-99EE-FF23D03826F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trecom.ServiceBus.MassTransit", "src\Api\ServiceBus\Trecom.ServiceBus.MassTransit\Trecom.ServiceBus.MassTransit.csproj", "{F1B2AE53-2EAF-46CF-B89C-B403088355BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trecom.ServiceBus.RabbitMQ", "src\Api\ServiceBus\Trecom.ServiceBus.RabbitMQ\Trecom.ServiceBus.RabbitMQ.csproj", "{8C1E0268-DA66-4C10-B069-A85A10C7D5CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trecom.ServiceBus.Kafka", "src\Api\ServiceBus\Trecom.ServiceBus.Kafka\Trecom.ServiceBus.Kafka.csproj", "{F38E239B-6E08-4A48-A3C6-9E14442FDFB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trecom.ServiceBus.BusinessAction", "src\Api\ServiceBus\Trecom.ServiceBus.BusinessAction\Trecom.ServiceBus.BusinessAction.csproj", "{1222FABA-75EC-41FA-BE2A-D0B84F687073}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -143,6 +155,26 @@ Global
 		{DD088BCD-F0B2-41AB-8722-63A591EAAC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD088BCD-F0B2-41AB-8722-63A591EAAC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD088BCD-F0B2-41AB-8722-63A591EAAC73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F570EF85-DE34-4680-99EE-FF23D03826F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F570EF85-DE34-4680-99EE-FF23D03826F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F570EF85-DE34-4680-99EE-FF23D03826F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F570EF85-DE34-4680-99EE-FF23D03826F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1B2AE53-2EAF-46CF-B89C-B403088355BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1B2AE53-2EAF-46CF-B89C-B403088355BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1B2AE53-2EAF-46CF-B89C-B403088355BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1B2AE53-2EAF-46CF-B89C-B403088355BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C1E0268-DA66-4C10-B069-A85A10C7D5CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C1E0268-DA66-4C10-B069-A85A10C7D5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C1E0268-DA66-4C10-B069-A85A10C7D5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C1E0268-DA66-4C10-B069-A85A10C7D5CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F38E239B-6E08-4A48-A3C6-9E14442FDFB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F38E239B-6E08-4A48-A3C6-9E14442FDFB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F38E239B-6E08-4A48-A3C6-9E14442FDFB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F38E239B-6E08-4A48-A3C6-9E14442FDFB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1222FABA-75EC-41FA-BE2A-D0B84F687073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1222FABA-75EC-41FA-BE2A-D0B84F687073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1222FABA-75EC-41FA-BE2A-D0B84F687073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1222FABA-75EC-41FA-BE2A-D0B84F687073}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +213,12 @@ Global
 		{1C53697F-8253-45A0-806B-3817FBF4DD53} = {D6CF11A3-11D0-44BD-8DCF-AFF75BB60D16}
 		{C38EC8D3-936F-42D9-AC59-63D4655208CE} = {40BBABFD-D36D-489C-96BD-D06B9212D8F5}
 		{DD088BCD-F0B2-41AB-8722-63A591EAAC73} = {C38EC8D3-936F-42D9-AC59-63D4655208CE}
+		{35D3F7DF-ACCF-4C30-9FDE-9A5FC20C4FFC} = {68330B82-BE38-48B2-AA46-C2F2F4E4564A}
+		{F570EF85-DE34-4680-99EE-FF23D03826F8} = {35D3F7DF-ACCF-4C30-9FDE-9A5FC20C4FFC}
+		{F1B2AE53-2EAF-46CF-B89C-B403088355BD} = {35D3F7DF-ACCF-4C30-9FDE-9A5FC20C4FFC}
+		{8C1E0268-DA66-4C10-B069-A85A10C7D5CE} = {35D3F7DF-ACCF-4C30-9FDE-9A5FC20C4FFC}
+		{F38E239B-6E08-4A48-A3C6-9E14442FDFB0} = {35D3F7DF-ACCF-4C30-9FDE-9A5FC20C4FFC}
+		{1222FABA-75EC-41FA-BE2A-D0B84F687073} = {35D3F7DF-ACCF-4C30-9FDE-9A5FC20C4FFC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {608D91E8-E307-4EBB-B910-EB9E0EBE7873}

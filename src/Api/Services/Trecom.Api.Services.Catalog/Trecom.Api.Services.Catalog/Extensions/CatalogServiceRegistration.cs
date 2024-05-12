@@ -10,6 +10,8 @@ using Trecom.Api.Services.Catalog.Persistance;
 using Trecom.Api.Services.Catalog.Persistance.DataSeeding;
 using Trecom.Api.Services.Catalog.Persistance.Elasticsearch.Repository;
 using Trecom.Api.Services.Catalog.Persistance.EntityFramework;
+using Trecom.Api.Services.Catalog.Persistance.EntityFramework.Repository;
+using Trecom.Api.Services.Catalog.Persistance.EntityFramework.Repository.Interfaces;
 using Trecom.Shared.Pipelines;
 using Trecom.Shared.Pipelines.Catching;
 using Trecom.Shared.Pipelines.Logging;
@@ -25,15 +27,15 @@ public static class CatalogServiceRegistration
 
         services.AddMassTransitServices(configuration);
 
-        services.AddScoped<ProductElasticRepository>();
-        services.AddScoped<BrandElasticRepository>();  
-        services.AddScoped<CategoryElasticRepository>();
+        //services.AddScoped<ProductElasticRepository>();
+        //services.AddScoped<BrandElasticRepository>();  
+        //services.AddScoped<CategoryElasticRepository>();
         services.AddTransient(typeof(IPipelineBehavior<,>), (typeof(ValidationPipelineBehavior<,>)));
         services.AddTransient(typeof(IPipelineBehavior<,>), (typeof(LoggingPipelineBehavior<,>)));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(CachingPipelineBehavior<,>));
 
         services.Configure<CacheSettings>(configuration.GetSection("CacheSettings"));
-
+        services.AddScoped<IProductRepository, ProductRepository>();
         services.AddAutoMapper(Assembly.GetExecutingAssembly());
         services.AddMediatR(x =>
         {

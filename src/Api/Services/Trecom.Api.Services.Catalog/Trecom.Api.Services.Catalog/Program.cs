@@ -18,8 +18,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddDbContext<CatalogDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("SqlCon")));
-
+builder.Services.AddDbContext<CatalogDbContext>();
 builder.Services.RegisterRequiredServices(builder.Configuration);
 
 
