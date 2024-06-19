@@ -18,17 +18,17 @@ namespace Trecom.Api.Services.Notification.Services
 
         public async Task SendEmailAsync(string[] tos, string subject, string body, bool isHtmlEnabled = true)
         {
-            var smtpClient = SmtpClient();
+            var smtpClient = GetSmtpClient();
             Mail mail = Mail.Create(tos,subject,configuration.From,body);
             await smtpClient.SendMailAsync(Mail.CreateMailMessage(mail,configuration));
         }
 
-        public async Task SendEmailAsync(string to, string subject, string body, bool isHtmlEnabled)
+        public async Task SendEmailAsync(string to, string subject, string body, bool isHtmlEnabled=true)
         {
             await SendEmailAsync(new string[] { to }, subject, body, isHtmlEnabled);
         }
 
-        private SmtpClient SmtpClient()
+        private SmtpClient GetSmtpClient()
         {
             SmtpClient smtpClient = new();
             smtpClient.Credentials = new NetworkCredential(configuration.Username, configuration.Password);

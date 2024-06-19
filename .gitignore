@@ -10,7 +10,7 @@
 *.userosscache
 *.sln.docstates
 
-/src/Client/Trecom.Client.MvcClient/wwwroot/templates/
+/src/Client/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
