@@ -12,6 +12,7 @@ public class IntegrationEvent
     public Guid Id { get; }
     public DateTime CreatedDate { get; }
     public string CreatedBy { get; set; }
+    public Dictionary<string,string> Header { get; set; }
 
     public IntegrationEvent()
     {
@@ -20,10 +21,20 @@ public class IntegrationEvent
     }
 
     [JsonConstructor]
-    public IntegrationEvent(Guid id,DateTime createdDate,string createdBy)
+    public IntegrationEvent(Guid id,DateTime createdDate,string createdBy, Dictionary<string, string> header = null)
     {
         Id = id;
         CreatedDate = createdDate;
         CreatedBy = createdBy;
+        Header = header;
+    }
+    public override string ToString()
+    {
+        StringBuilder sb = new();
+        foreach (var property in this.GetType().GetProperties())
+        {
+            sb.AppendLine($"{property.Name} : {property.GetValue(this)}");
+        }
+        return sb.ToString();
     }
 }

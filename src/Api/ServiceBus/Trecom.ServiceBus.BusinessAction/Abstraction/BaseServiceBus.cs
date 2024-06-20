@@ -12,17 +12,17 @@ namespace Trecom.ServiceBus.BusinessAction.Abstraction
 {
     public abstract class BaseServiceBus : IServiceBus, IDisposable
     {
-        public abstract void Publish(IntegrationEvent @event);
-        public abstract void Subscribe<T, TH>() where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
+        public abstract void Publish<TEvent>(string key, TEvent @event) where TEvent : IntegrationEvent;
+        public abstract Task Subscribe<T, TH>(CancellationToken cancellationToken = default) where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
         public abstract void UnSubscribe<T, TH>() where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
         public abstract void CallEsbService<T>(T message);
 
-        private readonly IEventManager eventManager;
-        private readonly IServiceProvider serviceProvider;
+        public readonly IEventManager eventManager;
+        public readonly IServiceProvider serviceProvider;
         public ServiceBusConfig config;
         public BaseServiceBus(ServiceBusConfig config, IEventManager eventManager, IServiceProvider serviceProvider)
         {
-           eventManager = new InMemoryEventManager();
+            this.eventManager = eventManager;
             this.config = config;
             this.serviceProvider = serviceProvider;
         }
@@ -53,7 +53,7 @@ namespace Trecom.ServiceBus.BusinessAction.Abstraction
             return processed;
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             config = null;
             eventManager.Clear();

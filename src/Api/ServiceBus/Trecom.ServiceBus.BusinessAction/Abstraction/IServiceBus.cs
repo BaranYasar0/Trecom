@@ -9,8 +9,8 @@ namespace Trecom.ServiceBus.BusinessAction.Abstraction
 {
     public interface IServiceBus
     {
-        void Publish(IntegrationEvent @event);
-        void Subscribe<T, TH>() where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
+        void Publish<TEvent>(string key, TEvent @event) where TEvent : IntegrationEvent;
+        Task Subscribe<T, TH>(CancellationToken cancellationToken = default) where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
         void UnSubscribe<T, TH>() where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
         void CallEsbService<T>(T service);
     }
