@@ -1,15 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-
+using Trecom.ServiceBus.
 namespace Trecom.ServiceBus.UnitTest
 {
     [TestClass]
-    public class ServiceBusTest
+    public class KafkaUnitTest
     {
         [TestMethod]
-        public void publish_event()
+        public void TestMethod1()
         {
-            KafkaServiceBus kafkaServiceBus = new();
-        }
+            KafkaServiceBus
+         }
     }
 }

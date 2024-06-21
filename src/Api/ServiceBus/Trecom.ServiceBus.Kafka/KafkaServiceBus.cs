@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trecom.ServiceBus.BusinessAction.Abstraction;
-using Trecom.ServiceBus.Domain;
+using Trecom.ServiceBus.BusinessAction.Domain;
 using static Confluent.Kafka.ConfigPropertyNames;
 
 namespace Trecom.ServiceBus.Kafka;
@@ -23,7 +23,7 @@ public class KafkaServiceBus : BaseServiceBus
     private readonly IOptions<ServiceBusConfig> options;
     private bool initialized = false;
     private bool disposed = false;
-    public KafkaServiceBus(ServiceBusConfig config, IEventManager eventManager, IServiceProvider serviceProvider, ILogger<KafkaServiceBus> logger, IConfiguration configuration, IOptions<ServiceBusConfig> options) : base(config, eventManager, serviceProvider)
+    public KafkaServiceBus(IOptions<ServiceBusConfig> config, IEventManager eventManager, IServiceProvider serviceProvider, ILogger<KafkaServiceBus> logger, IConfiguration configuration, IOptions<ServiceBusConfig> options) : base(config, eventManager, serviceProvider)
     {
         this.logger = logger;
         this.configuration = configuration;
@@ -57,10 +57,10 @@ public class KafkaServiceBus : BaseServiceBus
     public override Task Subscribe<T, TH>(CancellationToken cancellationToken = default)
     {
         string eventName = typeof(T).Name;
-        using IConsumer<string, T> consumer = InitializeConsumer<T>();
+        IConsumer<string, T> consumer = InitializeConsumer<T>();
         eventManager.AddSubscription<T, TH>();
         consumer.Subscribe(eventName);
-        Task.Factory.StartNew(async () =>
+        Task.Run(async () =>
         {
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -71,7 +71,7 @@ public class KafkaServiceBus : BaseServiceBus
                     {
                         result = consumer.Consume(cancellationToken);
                     }
-                    catch (ConsumeException e)
+                    catch (Exception e)
                     {
                         consumer.StoreOffset(result);
                         logger.LogError(e, $"Error while consuming message {result.Message.Value}");
@@ -99,12 +99,14 @@ public class KafkaServiceBus : BaseServiceBus
                 catch (Exception e)
                 {
                     logger.LogError($"Error occured on consuming message", e);
+                    continue;
                 }
-                finally
-                {
-                    consumer.Close();
-                    disposed = true;
-                }
+                //finally
+                //{
+                //    consumer.Close();
+                //    consumer.Dispose();
+                //    disposed = true;
+                //}
             }
         }, cancellationToken);
         return Task.CompletedTask;
@@ -130,6 +132,7 @@ public class KafkaServiceBus : BaseServiceBus
     private Headers GetKafkaHeader(Dictionary<string, string> eventHeaders)
     {
         Headers headers = new();
+        if (eventHeaders is null || !eventHeaders.Any()) return headers;
         foreach (var header in eventHeaders)
         {
             headers.Add(header.Key, Encoding.UTF8.GetBytes(header.Value));

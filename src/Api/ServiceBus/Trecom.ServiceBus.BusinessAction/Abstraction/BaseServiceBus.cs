@@ -1,16 +1,17 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Trecom.ServiceBus.BusinessAction.Domain;
 using Trecom.ServiceBus.BusinessAction.EventManagers;
-using Trecom.ServiceBus.Domain;
 
 namespace Trecom.ServiceBus.BusinessAction.Abstraction
 {
-    public abstract class BaseServiceBus : IServiceBus, IDisposable
+    public abstract class BaseServiceBus : IServiceBus
     {
         public abstract void Publish<TEvent>(string key, TEvent @event) where TEvent : IntegrationEvent;
         public abstract Task Subscribe<T, TH>(CancellationToken cancellationToken = default) where T : IntegrationEvent where TH : IIntegrationEventHandler<T>;
@@ -20,10 +21,10 @@ namespace Trecom.ServiceBus.BusinessAction.Abstraction
         public readonly IEventManager eventManager;
         public readonly IServiceProvider serviceProvider;
         public ServiceBusConfig config;
-        public BaseServiceBus(ServiceBusConfig config, IEventManager eventManager, IServiceProvider serviceProvider)
+        public BaseServiceBus(IOptions<ServiceBusConfig> config, IEventManager eventManager, IServiceProvider serviceProvider)
         {
             this.eventManager = eventManager;
-            this.config = config;
+            this.config = config.Value;
             this.serviceProvider = serviceProvider;
         }
 
@@ -53,10 +54,10 @@ namespace Trecom.ServiceBus.BusinessAction.Abstraction
             return processed;
         }
 
-        public virtual void Dispose()
-        {
-            config = null;
-            eventManager.Clear();
-        }
+        //public virtual void Dispose()
+        //{
+        //    config = null;
+        //    eventManager.Clear();
+        //}
     }
 }

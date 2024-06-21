@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trecom.ServiceBus.BusinessAction.Abstraction;
-using Trecom.ServiceBus.Domain;
+using Trecom.ServiceBus.BusinessAction.Domain;
 
 namespace Trecom.ServiceBus.BusinessAction.EventManagers
 {
-    internal class InMemoryEventManager : IEventManager
+    public class InMemoryEventManager : IEventManager
     {
 
         private readonly Dictionary<string, List<SubscriptionInfo>> _handlers;

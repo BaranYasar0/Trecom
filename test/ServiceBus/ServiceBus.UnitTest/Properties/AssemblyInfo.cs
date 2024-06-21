@@ -2,18 +2,18 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Trecom.ServiceBus.UnitTest")]
+[assembly: AssemblyTitle("ServiceBus.UnitTest")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Trecom.ServiceBus.UnitTest")]
+[assembly: AssemblyProduct("ServiceBus.UnitTest")]
 [assembly: AssemblyCopyright("Copyright ©  2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("74dc2c64-a8ed-4d75-87ae-fd08dd56b636")]
+[assembly: Guid("a56ef6b2-7edf-4d53-9481-b824ff7247df")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]

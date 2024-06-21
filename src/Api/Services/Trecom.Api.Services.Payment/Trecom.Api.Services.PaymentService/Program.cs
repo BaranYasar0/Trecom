@@ -1,5 +1,12 @@
 using MassTransit;
+using Trecom.Api.Services.PaymentService;
 using Trecom.Api.Services.PaymentService.Consumers;
+using Trecom.Api.Services.PaymentService.Events.EventHandlers;
+using Trecom.Api.Services.PaymentService.Events.Events;
+using Trecom.ServiceBus.BusinessAction.Abstraction;
+using Trecom.ServiceBus.BusinessAction.Domain;
+using Trecom.ServiceBus.BusinessAction.EventManagers;
+using Trecom.ServiceBus.Kafka;
 using Trecom.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,8 +33,18 @@ builder.Services.AddMassTransit(cfg =>
 
 });
 
+builder.Services.Configure<ServiceBusConfig>(builder.Configuration.GetSection("ServiceBusConfig"));
+builder.Services.AddScoped<PaymentTestIntegrationEventHandler>();
+builder.Services.AddSingleton<IEventManager, InMemoryEventManager>();
+builder.Services.AddScoped<IServiceBus, KafkaServiceBus>();
+
+
 var app = builder.Build();
 
+using var scope = app.Services.CreateScope();
+
+var serviceBus = scope.ServiceProvider.GetRequiredService<IServiceBus>();
+await serviceBus.Subscribe<PaymentTestIntegrationEvent, PaymentTestIntegrationEventHandler>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

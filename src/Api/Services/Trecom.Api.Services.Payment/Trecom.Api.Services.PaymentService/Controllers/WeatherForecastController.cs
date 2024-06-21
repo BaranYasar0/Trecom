@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Trecom.Api.Services.PaymentService.Events.Events;
+using Trecom.ServiceBus.BusinessAction.Abstraction;
 
 namespace Trecom.Api.Services.PaymentService.Controllers;
 
@@ -12,21 +14,21 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    private readonly IServiceBus serviceBus;
+    public WeatherForecastController(ILogger<WeatherForecastController> logger, IServiceBus serviceBus)
     {
         _logger = logger;
+        this.serviceBus = serviceBus;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    public IActionResult Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+
+        Task.Run(() =>
+        {
+            serviceBus.Publish("1", new PaymentTestIntegrationEvent { TestId = "1", CreatedBy = "brn" });
+        }); 
+        return Ok();
     }
 }

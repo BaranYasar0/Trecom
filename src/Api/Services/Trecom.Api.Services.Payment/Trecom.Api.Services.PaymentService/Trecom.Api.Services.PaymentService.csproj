@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Shared\Trecom.Shared\Trecom.Shared.csproj" />
+    <ProjectReference Include="..\..\..\ServiceBus\Trecom.ServiceBus.BusinessAction\Trecom.ServiceBus.BusinessAction.csproj" />
+    <ProjectReference Include="..\..\..\ServiceBus\Trecom.ServiceBus.Kafka\Trecom.ServiceBus.Kafka.csproj" />
   </ItemGroup>
 
 </Project>

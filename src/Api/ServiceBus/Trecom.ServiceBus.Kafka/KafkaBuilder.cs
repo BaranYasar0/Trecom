@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Trecom.ServiceBus.Domain;
+using Trecom.ServiceBus.BusinessAction.Domain;
 using Trecom.ServiceBus.Kafka.Configuration;
 using Trecom.ServiceBus.Kafka.CustomSerializers;
 
@@ -28,7 +28,7 @@ namespace Trecom.ServiceBus.Kafka
 
         public IConsumer<TKey, TValue> BuildKafkaConsumer(string groupId = null)
         {
-            ConsumerConfig consumerConfig = GetConsumerConfig(groupId);
+            ConsumerConfig consumerConfig = GetConsumerConfig(configuration["GroupId"]);
 
             ArgumentNullException.ThrowIfNull(consumerConfig.BootstrapServers);
 
@@ -66,16 +66,18 @@ namespace Trecom.ServiceBus.Kafka
         {
             return new ProducerConfig()
             {
-                BootstrapServers = serviceBusConfig.ServiceBusConnectionString,
-                SaslMechanism = SaslMechanism.ScramSha512,
-                SecurityProtocol = SecurityProtocol.SaslSsl,
+                //BootstrapServers = serviceBusConfig.ServiceBusConnectionString,
+                BootstrapServers = "localhost:9094",
+
+                //SaslMechanism = SaslMechanism.ScramSha512,
+                //SecurityProtocol = SecurityProtocol.SaslSsl,
                 //SslCaLocation = serviceBusConfig.CertificatePath,
                 //SaslPassword = serviceBusConfig.Password,
                 //SaslUsername = serviceBusConfig.UserName,
                 Acks = Acks.All,
                 AllowAutoCreateTopics = true,
                 MessageTimeoutMs = 6000,
-                //MessageSendMaxRetries =6,
+                MessageSendMaxRetries = 3,
                 //RetryBackoffMaxMs = 2000,
                 //RetryBackoffMs = 2000
             };
@@ -84,9 +86,10 @@ namespace Trecom.ServiceBus.Kafka
         {
             return new ConsumerConfig()
             {
-                BootstrapServers = serviceBusConfig.ServiceBusConnectionString,
-                SaslMechanism = SaslMechanism.ScramSha512,
-                SecurityProtocol = SecurityProtocol.SaslSsl,
+                //BootstrapServers = serviceBusConfig.ServiceBusConnectionString,
+                BootstrapServers = "localhost:9094",
+                //SaslMechanism = SaslMechanism.ScramSha512,
+                //SecurityProtocol = SecurityProtocol.SaslSsl,
                 //SslCaLocation = _serverConfiguration.CertificatePath,
                 //SaslPassword = _serverConfiguration.Password,
                 //SaslUsername = _serverConfiguration.UserName,

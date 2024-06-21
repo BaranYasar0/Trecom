@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Trecom.ServiceBus.BusinessAction.Abstraction;
-using Trecom.ServiceBus.Domain;
+using Trecom.ServiceBus.BusinessAction.Domain;
 
 namespace Trecom.ServiceBus.BusinessAction.EventManagers
 {

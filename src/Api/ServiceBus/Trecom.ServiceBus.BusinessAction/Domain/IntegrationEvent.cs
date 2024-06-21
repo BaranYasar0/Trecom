@@ -5,14 +5,14 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Trecom.ServiceBus.Domain;
+namespace Trecom.ServiceBus.BusinessAction.Domain;
 
 public class IntegrationEvent
 {
     public Guid Id { get; }
     public DateTime CreatedDate { get; }
     public string CreatedBy { get; set; }
-    public Dictionary<string,string> Header { get; set; }
+    public Dictionary<string, string> Header { get; set; }
 
     public IntegrationEvent()
     {
@@ -21,7 +21,7 @@ public class IntegrationEvent
     }
 
     [JsonConstructor]
-    public IntegrationEvent(Guid id,DateTime createdDate,string createdBy, Dictionary<string, string> header = null)
+    public IntegrationEvent(Guid id, DateTime createdDate, string createdBy, Dictionary<string, string> header = null)
     {
         Id = id;
         CreatedDate = createdDate;
@@ -31,7 +31,7 @@ public class IntegrationEvent
     public override string ToString()
     {
         StringBuilder sb = new();
-        foreach (var property in this.GetType().GetProperties())
+        foreach (var property in GetType().GetProperties())
         {
             sb.AppendLine($"{property.Name} : {property.GetValue(this)}");
         }

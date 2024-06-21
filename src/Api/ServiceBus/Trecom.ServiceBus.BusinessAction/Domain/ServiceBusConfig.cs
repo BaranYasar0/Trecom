@@ -1,4 +1,4 @@
-﻿namespace Trecom.ServiceBus.Domain
+﻿namespace Trecom.ServiceBus.BusinessAction.Domain
 {
     public class ServiceBusConfig
     {
@@ -13,6 +13,8 @@
         public string EventNamePrefix { get; set; } = String.Empty;
 
         public string EventNameSuffix { get; set; } = "IntegrationEvent";
+        public string GroupId { get; set; } = "trecom-default-group";
+
 
         public object Connection { get; set; }
 

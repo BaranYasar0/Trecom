@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trecom.ServiceBus.Domain
+namespace Trecom.ServiceBus.BusinessAction.Domain
 {
     public class SubscriptionInfo
     {
